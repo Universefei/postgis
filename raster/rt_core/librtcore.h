@@ -2176,15 +2176,15 @@ rt_util_hsv_to_rgb(
 */
 #define ROUND(x, y) (((x > 0.0) ? floor((x * pow(10, y) + 0.5)) : ceil((x * pow(10, y) - 0.5))) / pow(10, y))
 
-/**
+/******************************************************************************
  * Struct definitions
  *
  * These structs are defined here as they are needed elsewhere
  * including rt_pg/rt_pg.c and reduce duplicative declarations
  *
- */
+ ******************************************************************************/
 struct rt_raster_serialized_t {
-    /*---[ 8 byte boundary ]---{ */
+    /* ---[ 8 byte boundary ]---{ */
     uint32_t size; /* required by postgresql: 4 bytes */
     uint16_t version; /* format version (this is version 0): 2 bytes */
     uint16_t numBands; /* Number of bands: 2 bytes */

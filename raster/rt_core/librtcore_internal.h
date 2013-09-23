@@ -33,9 +33,27 @@
 
 #include <assert.h>
 
+/******************************************************************************
+ * what is *_config.h?
+ * a serials of define sentences which are switches of multiple configurations
+ * "postgis_config.h" and "raster_config.h" below are these catagories
+ * you can treat them as a *.conf file in Linux shell conf-file
+ ******************************************************************************/
+
+/**
+ * a army of undef; generated from configure.ac
+ * #include "postgis_svn_revision.h"
+ */
 #include "../../postgis_config.h"
+
+/**
+ * multiple undef ; generatedfrom configure.ac by autoheader
+ */
 #include "../raster_config.h"
 
+/**
+ * include "liblwgeom.h"
+ */
 #include "lwgeom_geos.h"
 
 #include "librtcore.h"
