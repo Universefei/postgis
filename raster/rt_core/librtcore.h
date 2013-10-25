@@ -2217,6 +2217,34 @@ struct rt_raster_serialized_t {
  *       of data in the serialized form version 0, starting
  *       from the numBands element
  */
+
+/******************************************************************************
+ ***[ other info ]*************************************************************
+ *
+ *  uint32_t size; 
+ *  uint16_t version
+ *  int32_t srid;
+ *
+ ***[ Georeference (in projection units) ]*************************************
+ *
+ *  double scaleX; 
+ *  double scaleY;
+ *  double ipX; 
+ *  double ipY;
+ *  double skewX; 
+ *  double skewY;
+ *
+ ***[ 3 demension metadata ]***************************************************
+ *
+ *  unit16_t width;
+ *  unit16_t height;
+ *  unit16_t numBands;
+ *
+ ***[ real data ]************************************************************** 
+ *
+ *  rt_band *bands;
+ *
+ *****************************************************************************/
 struct rt_raster_t {
     uint32_t size;
     uint16_t version;

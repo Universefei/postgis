@@ -33,8 +33,12 @@
 
 #include <math.h>
 
+/******************************************************************************
+ * rt_raster_new()                                                            *
+ *****************************************************************************/
+
 /**
- * Construct a raster with given dimensions.
+ * Construct a raster with given dimensions.(allocate memory space actually)
  *
  * Transform will be set to identity.
  * Will contain no bands.
@@ -46,7 +50,7 @@
  */
 rt_raster
 rt_raster_new(uint32_t width, uint32_t height) {
-	rt_raster ret = NULL;
+	rt_raster ret = NULL;/* init with NULL */
 
 	ret = (rt_raster) rtalloc(sizeof (struct rt_raster_t));
 	if (!ret) {
@@ -73,10 +77,14 @@ rt_raster_new(uint32_t width, uint32_t height) {
 	ret->srid = SRID_UNKNOWN;
 
 	ret->numBands = 0;
-	ret->bands = NULL; 
+	ret->bands = NULL; /* data */
 
 	return ret;
 }
+
+/******************************************************************************
+ * rt_raster_destroy()                                                        *
+ *****************************************************************************/
 
 void
 rt_raster_destroy(rt_raster raster) {
@@ -90,6 +98,12 @@ rt_raster_destroy(rt_raster raster) {
 
 	rtdealloc(raster);
 }
+
+/******************************************************************************
+ *                                                                            *
+ *                    get/set raster attributes                               *
+ *                                                                            *
+ *****************************************************************************/
 
 static void
 _rt_raster_geotransform_warn_offline_band(rt_raster raster) {

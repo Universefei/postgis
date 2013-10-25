@@ -33,6 +33,10 @@
 
 #include "gdal_vrt.h"
 
+/******************************************************************************
+* rt_band_new_inline()                                                        *
+******************************************************************************/
+
 /**
  * Create an in-db rt_band with no data
  *
@@ -62,6 +66,7 @@ rt_band_new_inline(
 ) {
 	rt_band band = NULL;
 
+	/* niu */
 	assert(NULL != data);
 
 	band = rtalloc(sizeof(struct rt_band_t));
@@ -89,11 +94,15 @@ rt_band_new_inline(
 	if (hasnodata && rt_band_set_nodata(band, nodataval, NULL) != ES_NONE) {
 		rterror("rt_band_new_inline: Could not set NODATA value");
 		rt_band_destroy(band);
-		return NULL;
+		return NULL;/* allocate mem failed */
 	}
 
 	return band;
 }
+
+/******************************************************************************
+* rt_band_new_offline()                                                       *
+******************************************************************************/
 
 /**
  * Create an out-db rt_band
@@ -171,6 +180,10 @@ rt_band_new_offline(
 	return band;
 }
 
+/******************************************************************************
+* rt_band_dumplicate()                                                        *
+******************************************************************************/
+
 /**
  * Create a new band duplicated from source band.  Memory is allocated
  * for band path (if band is offline) or band data (if band is online).
@@ -204,6 +217,7 @@ rt_band_duplicate(rt_band band) {
 	/* online */
 	else {
 		uint8_t *data = NULL;
+		/* allocate mem for real data */
 		data = rtalloc(rt_pixtype_size(band->pixtype) * band->width * band->height);
 		if (data == NULL) {
 			rterror("rt_band_duplicate: Out of memory allocating online band data");
@@ -212,6 +226,8 @@ rt_band_duplicate(rt_band band) {
 		/* copy from input param band to function's stack */
 		memcpy(data, band->data.mem, rt_pixtype_size(band->pixtype) * band->width * band->height);
 		/* allocate memory in heap */
+
+		/* allocate memory for metadata */
 		rtn = rt_band_new_inline(
 			band->width, band->height,
 			band->pixtype,
@@ -219,6 +235,7 @@ rt_band_duplicate(rt_band band) {
 			data
 		);
 		rt_band_set_ownsdata_flag(rtn, 1); /* we DO own this data!!! */
+		/* cause we filled real data(pointer) reference with data */
 	}
 
 	if (rtn == NULL) {
@@ -228,6 +245,10 @@ rt_band_duplicate(rt_band band) {
 
 	return rtn;
 }
+
+/******************************************************************************
+* rt_band_is_offline()                                                        *
+******************************************************************************/
 
 int
 rt_band_is_offline(rt_band band) {
@@ -244,12 +265,13 @@ rt_band_is_offline(rt_band band) {
 
 /**
  * Destroy a raster band,in another world, free heap memory
+ * Caller manually recycle memory
  *
  * @param band : the band to destroy
  */
 
 /*---------------------------------------------------------------------------*/
-/* recycle heap space                                                        */
+/* recycle heap space memory                                                 */
 /* everything in heap space should be dealloc!                               */
 /*---------------------------------------------------------------------------*/
 
@@ -286,6 +308,8 @@ rt_band_destroy(rt_band band) {
 ******************************************************************************/
 
 /**
+ * Get the path of offline path data
+ *
  * @param i band :must be a offline band, or can't pass type check 
  *
  * @return string that contain offline path
@@ -320,6 +344,7 @@ rt_band_get_ext_path(rt_band band) {
 
 rt_errorstate
 rt_band_get_ext_band_num(rt_band band, uint8_t *bandnum) {
+	/* NULL != band  */
 	assert(NULL != band);
 	assert(NULL != bandnum);
 
@@ -330,10 +355,12 @@ rt_band_get_ext_band_num(rt_band band, uint8_t *bandnum) {
 		return ES_ERROR;
 	}
 
+	/* write heap space memory via pointer parameter */
 	*bandnum = band->data.offline.bandNum;
 
 	return ES_NONE;
 }
+
 /******************************************************************************
  * rt_band_get_data( rt_band band )                                           *
  *****************************************************************************/
@@ -567,10 +594,21 @@ rt_band_get_height(rt_band band) {
 }
 
 /******************************************************************************
+ *                                                                            *
+ * There are 4 pair nodata related functions :                                *
+ *                                                                            *
+ * 1. rt_band_set/get_ownsdata_flag()                                         *
+ * 2. rt_band_set/get_hasnodata_flag()                                        *
+ * 3. rt_band_set/get_isnodata_flag()                                         *
+ * 4. rt_band_set/get_nodata()                                                *
+ *                                                                            *
+ *****************************************************************************/
+
+
+/******************************************************************************
 * rt_band_get_ownsdata_flag()                                                 *
 ******************************************************************************/
 
-/* Get ownsdata flag */
 int
 rt_band_get_ownsdata_flag(rt_band band) {
 	assert(NULL != band);
@@ -582,7 +620,6 @@ rt_band_get_ownsdata_flag(rt_band band) {
 * rt_band_set_ownsdata_flag()                                                 *
 ******************************************************************************/
 
-/* set ownsdata flag */
 void
 rt_band_set_ownsdata_flag(rt_band band, int flag) {
 	assert(NULL != band);
@@ -616,7 +653,7 @@ rt_band_set_hasnodata_flag(rt_band band, int flag) {
 		if (!band->hasnodata && band->isnodata) {
 			RASTER_DEBUG(3, "Setting isnodata to FALSE as band no longer has NODATA");
 			band->isnodata = 0;
-		}
+		}/* it is imposible that no nodata and isnodata */
 }
 
 /******************************************************************************
@@ -624,12 +661,14 @@ rt_band_set_hasnodata_flag(rt_band band, int flag) {
 ******************************************************************************/
 
 /**
- *  function overview
+ * Set band's isnodata value,if a band hasnodata is false(means no nodata)
+ * means all pixel have data (mask do not work),in this situation,can not set
+ * isnodata value
  *
- * @param 
- * @param 
+ * @param band : the pointer to band_t that need to be set isnodata
+ * @param flag : if flag > 0,set 1(isnodata,means all pixel are nodata value)
  * 
- * @return 
+ * @return ES_NONE if succeed,ES_ERROR if failed
  */
 
 
@@ -640,13 +679,16 @@ rt_band_set_isnodata_flag(rt_band band, int flag) {
 	if (!band->hasnodata) {
 		/* silently permit setting isnodata flag to FALSE */
 		if (!flag)
+			/* no nodata pixel and set to not isnodata (absolutly) */
 			band->isnodata = 0;
 		else {
+			/* no nodata pixel but isnodata band(all pixel is nodata value) (imposible) */
 			rterror("rt_band_set_isnodata_flag: Cannot set isnodata flag as band has no NODATA");
 			return ES_ERROR;
 		}
 	}
 	else 
+		/* hasnodata(band has nodata pixel);set band to isnodata/not */
 		band->isnodata = (flag) ? 1 : 0;
 
 	return ES_NONE;
@@ -657,12 +699,11 @@ rt_band_set_isnodata_flag(rt_band band, int flag) {
 ******************************************************************************/
 
 /**
- *  function overview
+ * judge a band's isnodata value(if is no data)
  *
- * @param 
- * @param 
+ * @param : the band to be judged
  * 
- * @return 
+ * @return : 1 if isnodata,else 0
  */
 
 
@@ -686,7 +727,7 @@ rt_band_get_isnodata_flag(rt_band band) {
  * @param band : the band to set nodata value to
  * @param val : the nodata value
  * @param b converted : if non-zero, value was truncated/clamped/coverted
- *                      indecate if val have been clamped when set to band
+ *        indecate if val have been clamped when set to band's nodata val
  *
  * @return ES_NONE or ES_ERROR
  */
@@ -791,6 +832,42 @@ rt_band_set_nodata(rt_band band, double val, int *converted) {
 
 	return ES_NONE;
 }
+
+/******************************************************************************
+* rt_band_get_nodata()                                                        *
+******************************************************************************/
+
+/**
+ * Get NODATA value
+ *
+ * @param band : the band whose NODATA value will be returned
+ * @param nodata : the band's NODATA value
+ *
+ * @return ES_NONE or ES_ERROR
+ */
+rt_errorstate
+rt_band_get_nodata(rt_band band, double *nodata) { 
+	assert(NULL != band);
+	assert(NULL != nodata);
+
+	*nodata = band->nodataval;
+
+	if (!band->hasnodata) {
+		rterror("rt_band_get_nodata: Band has no NODATA value");
+		return ES_ERROR;
+	}
+
+	return ES_NONE;
+}
+
+/******************************************************************************
+ *                                                                            *
+ * rt_band_set_pixel_line()                                                   *
+ * rt_band_set_pixel()                                                        *
+ * rt_band_get_pixel_line()                                                   *
+ * rt_band_get_pixel()                                                        *
+ *                                                                            *
+ *****************************************************************************/
 
 /******************************************************************************
 * rt_band_set_pixel_line()                                                    *
@@ -1712,43 +1789,15 @@ rt_band_get_pixel_of_value(
 }
 
 /******************************************************************************
-* rt_band_get_nodata()                                                        *
-******************************************************************************/
-
-/**
- * Get NODATA value
- *
- * @param band : the band whose NODATA value will be returned
- * @param nodata : the band's NODATA value
- *
- * @return ES_NONE or ES_ERROR
- */
-rt_errorstate
-rt_band_get_nodata(rt_band band, double *nodata) { 
-	assert(NULL != band);
-	assert(NULL != nodata);
-
-	*nodata = band->nodataval;
-
-	if (!band->hasnodata) {
-		rterror("rt_band_get_nodata: Band has no NODATA value");
-		return ES_ERROR;
-	}
-
-	return ES_NONE;
-}
-
-/******************************************************************************
 * rt_band_get_min_value()                                                     *
 ******************************************************************************/
 
 /**
- *  function overview
+ * Get the minimum possible value of specified band's pixel type  
  *
- * @param 
- * @param 
+ * @param band : the band to compute
  * 
- * @return 
+ * @return : the minmum value in a double-bulked memory unit
  */
 double
 rt_band_get_min_value(rt_band band) {
@@ -1762,7 +1811,7 @@ rt_band_get_min_value(rt_band band) {
 ******************************************************************************/
 
 /**
- *  function overview
+ * function overview
  *
  * @param 
  * @param 
@@ -1778,12 +1827,15 @@ rt_band_check_is_nodata(rt_band band) {
 	assert(NULL != band);
 
 	/* Check if band has nodata value */
-	if (!band->hasnodata) {
+	if (!band->hasnodata) { 
+		/* if all have value (no nodata value this kind of stuff) */
+		/* if not polluted */
 		RASTER_DEBUG(3, "Band has no NODATA value");
 		band->isnodata = FALSE;
 		return FALSE;
 	}
 
+	/* if polluted */
 	pxValue = band->nodataval;
 
 	/* Check all pixels */
