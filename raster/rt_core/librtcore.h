@@ -2270,10 +2270,10 @@ struct rt_pixel_t {
 	int x; /* column */
 	int y; /* line */
 
-	uint8_t nodata;
+	uint8_t nodata;/* indecate if this pixel is nodata? */
 	double value;
 
-	LWGEOM *geom;
+	LWGEOM *geom;/* do not know */
 };
 
 /* polygon as LWPOLY with associated value */

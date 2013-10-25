@@ -38,12 +38,13 @@
 ******************************************************************************/
 
 /* Functions definitions */
-void * init_rt_allocator(size_t size);
-void * init_rt_reallocator(void * mem, size_t size);
-void init_rt_deallocator(void * mem);
-void init_rt_errorreporter(const char * fmt, va_list ap);
-void init_rt_warnreporter(const char * fmt, va_list ap);
-void init_rt_inforeporter(const char * fmt, va_list ap);
+void * init_rt_allocator(size_t size); /* 分配内存 */
+void * init_rt_reallocator(void * mem, size_t size); /* 重新分配内存 */
+void init_rt_deallocator(void * mem); /* 回收内存 */
+
+void init_rt_errorreporter(const char * fmt, va_list ap);/* 打印错误 */
+void init_rt_warnreporter(const char * fmt, va_list ap);/* 打印警告 */
+void init_rt_inforeporter(const char * fmt, va_list ap);/* 打印提示信息 */
 
 /*
  * Default allocators

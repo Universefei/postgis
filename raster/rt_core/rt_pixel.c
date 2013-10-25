@@ -269,8 +269,8 @@ rt_errorstate rt_pixtype_compare_clamped_values(
  *
  * @param npixel : array of rt_pixel objects
  * @param count : number of elements in npixel
- * @param x : the column of the center pixel (0-based)
- * @param y : the line of the center pixel (0-based)
+ * @param x : the column of the center pixel (0-based)(location)
+ * @param y : the line of the center pixel (0-based)(location)
  * @param distancex : the number of pixels around the specified pixel
  * along the X axis
  * @param distancey : the number of pixels around the specified pixel
@@ -282,6 +282,7 @@ rt_errorstate rt_pixtype_compare_clamped_values(
  *
  * @return ES_NONE on success, ES_ERROR on error
  */
+
 rt_errorstate rt_pixel_set_to_array(
 	rt_pixel npixel, int count,
 	int x, int y,
