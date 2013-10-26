@@ -31,6 +31,12 @@
 #include "librtcore.h"
 #include "librtcore_internal.h"
 
+/******************************************************************************
+ *                                                                            *
+ *                         clamp functions                                    *
+ *                                                                            *
+ *****************************************************************************/
+
 uint8_t
 rt_util_clamp_to_1BB(double value) {
     return (uint8_t)fmin(fmax((value), 0), POSTGIS_RT_1BBMAX);

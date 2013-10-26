@@ -32,6 +32,10 @@
 #include "librtcore_internal.h"
 #include "rt_serialize.h"
 
+/******************************************************************************
+ * rt_band_from_wkb()
+ *****************************************************************************/
+
 /* Read band from WKB as at start of band */
 static rt_band
 rt_band_from_wkb(
@@ -39,6 +43,7 @@ rt_band_from_wkb(
 	const uint8_t** ptr, const uint8_t* end,
 	uint8_t littleEndian
 ) {
+	/* variables declartion */
 	rt_band band = NULL;
 	int pixbytes = 0;
 	uint8_t type = 0;
@@ -48,11 +53,14 @@ rt_band_from_wkb(
 	assert(NULL != ptr);
 	assert(NULL != end);
 
+	/* allocate memory */
 	band = rtalloc(sizeof (struct rt_band_t));
 	if (!band) {
 		rterror("rt_band_from_wkb: Out of memory allocating rt_band during WKB parsing");
 		return NULL;
 	}
+
+	/* set band member values */
 	band->ownsdata = 0; /* assume we don't own data */
 
 	if (end - *ptr < 1) {
@@ -273,6 +281,10 @@ rt_band_from_wkb(
 /* -4 for size, +1 for endian */
 #define RT_WKB_HDR_SZ (sizeof(struct rt_raster_serialized_t)-4+1)
 
+/******************************************************************************
+ * rt_raster_from_wkb()
+ *****************************************************************************/
+
 rt_raster
 rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 	const uint8_t *ptr = wkb;
@@ -403,6 +415,10 @@ rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 	return rast;
 }
 
+/******************************************************************************
+ * rt_raster_from_hexwkb()
+ *****************************************************************************/
+
 rt_raster
 rt_raster_from_hexwkb(const char* hexwkb, uint32_t hexwkbsize) {
 	rt_raster ret = NULL;
@@ -437,6 +453,10 @@ rt_raster_from_hexwkb(const char* hexwkb, uint32_t hexwkbsize) {
 
 	return ret;
 }
+
+/******************************************************************************
+ * rt_raster_wkb_size()
+ *****************************************************************************/
 
 static uint32_t
 rt_raster_wkb_size(rt_raster raster, int outasin) {
@@ -481,6 +501,10 @@ rt_raster_wkb_size(rt_raster raster, int outasin) {
 
 	return size;
 }
+
+/******************************************************************************
+ * rt_raster_to_wkb()
+ *****************************************************************************/
 
 /**
  * Return this raster in WKB form
@@ -665,6 +689,10 @@ rt_raster_to_wkb(rt_raster raster, int outasin, uint32_t *wkbsize) {
 
 	return wkb;
 }
+
+/******************************************************************************
+ * rt_raster_to_hexwkb()
+ *****************************************************************************/
 
 char *
 rt_raster_to_hexwkb(rt_raster raster, int outasin, uint32_t *hexwkbsize) {
