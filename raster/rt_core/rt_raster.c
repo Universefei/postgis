@@ -52,7 +52,10 @@ rt_raster
 rt_raster_new(uint32_t width, uint32_t height) {
 	rt_raster ret = NULL;/* init with NULL */
 
+	/* allocate memory in heap space */
 	ret = (rt_raster) rtalloc(sizeof (struct rt_raster_t));
+
+	/* allocate memory faild */
 	if (!ret) {
 		rterror("rt_raster_new: Out of virtual memory creating an rt_raster");
 		return NULL;
@@ -60,12 +63,14 @@ rt_raster_new(uint32_t width, uint32_t height) {
 
 	RASTER_DEBUGF(3, "Created rt_raster @ %p", ret);
 
+	/* input width and height out of range limit */
 	if (width > 65535 || height > 65535) {
 		rterror("rt_raster_new: Dimensions requested exceed the maximum (65535 x 65535) permitted for a raster");
 		rt_raster_destroy(ret);
 		return NULL;
 	}
 
+	/* fill attibutes */
 	ret->width = width;
 	ret->height = height;
 	ret->scaleX = 1;
@@ -93,6 +98,20 @@ rt_raster_destroy(rt_raster raster) {
 
 	RASTER_DEBUGF(3, "Destroying rt_raster @ %p", raster);
 
+	/**
+	 * BUG?
+	 * ====
+	 *
+	 * Only destroy:
+	 * 1] rt_band array(pointer array actually) which raster->bands point to
+	 * 2] raster struct
+	 * Not destroy:
+	 * rt_band_t structures that every rt_band point to
+	 * rt_band_t structures store real band metadata and real data
+	 *
+	 * Note:
+	 * 1] and 2] can not adverse
+	 */
 	if (raster->bands)
 		rtdealloc(raster->bands);
 
@@ -105,6 +124,7 @@ rt_raster_destroy(rt_raster raster) {
  *                                                                            *
  *****************************************************************************/
 
+/**** [ internal functions ] ------------------------------------------------*/
 static void
 _rt_raster_geotransform_warn_offline_band(rt_raster raster) {
 	int numband = 0;
@@ -131,6 +151,7 @@ _rt_raster_geotransform_warn_offline_band(rt_raster raster) {
 	}
 }
 
+/**** [ rt_raster_get_width() ] ---------------------------------------------*/
 uint16_t
 rt_raster_get_width(rt_raster raster) {
 
@@ -139,6 +160,7 @@ rt_raster_get_width(rt_raster raster) {
     return raster->width;
 }
 
+/**** [ rt_raster_get_height() ] --------------------------------------------*/
 uint16_t
 rt_raster_get_height(rt_raster raster) {
 
@@ -146,7 +168,18 @@ rt_raster_get_height(rt_raster raster) {
 
     return raster->height;
 }
+/*---------------------------------------------------------------------------*/
+/*                           Georeference Info                               */
+/*                                                                           */
+/*        scaleX                                                             */
+/*        scaleY                                                             */
+/*        ipX                                                                */
+/*        ipY                                                                */
+/*        skewX                                                              */
+/*        skewY                                                              */
+/*---------------------------------------------------------------------------*/
 
+/**** [ rt_raster_set_scale() ] ---------------------------------------------*/
 void
 rt_raster_set_scale(
 	rt_raster raster,
@@ -160,6 +193,7 @@ rt_raster_set_scale(
 	_rt_raster_geotransform_warn_offline_band(raster);
 }
 
+/**** [ rt_raster_get_x_scale() ] -------------------------------------------*/
 double
 rt_raster_get_x_scale(rt_raster raster) {
 
@@ -169,6 +203,7 @@ rt_raster_get_x_scale(rt_raster raster) {
     return raster->scaleX;
 }
 
+/**** [ rt_raster_get_y_scale() ] -------------------------------------------*/
 double
 rt_raster_get_y_scale(rt_raster raster) {
 
@@ -178,6 +213,8 @@ rt_raster_get_y_scale(rt_raster raster) {
     return raster->scaleY;
 }
 
+
+/**** [ rt_raster_set_skews() ] ---------------------------------------------*/
 void
 rt_raster_set_skews(
 	rt_raster raster,
@@ -191,6 +228,7 @@ rt_raster_set_skews(
 	_rt_raster_geotransform_warn_offline_band(raster);
 }
 
+/**** [ rt_raster_get_x_skew() ] --------------------------------------------*/
 double
 rt_raster_get_x_skew(rt_raster raster) {
 
@@ -200,6 +238,7 @@ rt_raster_get_x_skew(rt_raster raster) {
     return raster->skewX;
 }
 
+/**** [ rt_raster_get_y_skew() ] --------------------------------------------*/
 double
 rt_raster_get_y_skew(rt_raster raster) {
 
@@ -209,6 +248,7 @@ rt_raster_get_y_skew(rt_raster raster) {
     return raster->skewY;
 }
 
+/**** [ rt_raster_set_offsets() ] -------------------------------------------*/
 void
 rt_raster_set_offsets(
 	rt_raster raster,
@@ -223,6 +263,7 @@ rt_raster_set_offsets(
 	_rt_raster_geotransform_warn_offline_band(raster);
 }
 
+/**** [ rt_raster_get_x_offset() ] ------------------------------------------*/
 double
 rt_raster_get_x_offset(rt_raster raster) {
 
@@ -232,6 +273,7 @@ rt_raster_get_x_offset(rt_raster raster) {
     return raster->ipX;
 }
 
+/**** [ rt_raster_get_y_offset() ] ------------------------------------------*/
 double
 rt_raster_get_y_offset(rt_raster raster) {
 
@@ -240,6 +282,26 @@ rt_raster_get_y_offset(rt_raster raster) {
 
     return raster->ipY;
 }
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                      phys_params assoated functions                       */
+/*                                                                           */
+/*---------------------------------------------------------------------------*/
+
+/******************************************************************************
+ * rt_raster_get_phys_params()
+ *****************************************************************************/
+
+/**
+ * 
+ *
+ * @param (i/o/b)
+ * @param (i/o/b)
+ * @param (i/o/b)
+ *
+ * @return 
+ */
 
 void
 rt_raster_get_phys_params(rt_raster rast,
@@ -259,6 +321,19 @@ rt_raster_get_phys_params(rt_raster rast,
 
     rt_raster_calc_phys_params(o11, o12, o21, o22, i_mag, j_mag, theta_i, theta_ij);
 }
+
+/******************************************************************************
+ * rt_raster_calc_phys_params()
+ *****************************************************************************/
+
+/** 
+ *
+ * @param (i/o/b)
+ * @param (i/o/b)
+ * @param (i/o/b)
+ *
+ * @return 
+ */
 
 void
 rt_raster_calc_phys_params(double xscale, double xskew, double yskew, double yscale,
@@ -307,6 +382,9 @@ rt_raster_calc_phys_params(double xscale, double xskew, double yskew, double ysc
     }
 }
 
+/******************************************************************************
+ * rt_raster_set_phys_params()
+ *****************************************************************************/
 void
 rt_raster_set_phys_params(rt_raster rast,double i_mag, double j_mag, double theta_i, double theta_ij)
 {
@@ -398,6 +476,7 @@ rt_raster_get_band(rt_raster raster, int n) {
 	if (n >= raster->numBands || n < 0)
 		return NULL;
 
+	/* Use pointer as array name */
 	return raster->bands[n];
 }
 
@@ -2406,8 +2485,8 @@ rt_raster_from_gdal_dataset(GDALDatasetH ds) {
 }
 
 /******************************************************************************
-* rt_raster_gdal_rasterize()
-******************************************************************************/
+ * rt_raster_gdal_rasterize()
+ *****************************************************************************/
 
 typedef struct _rti_rasterize_arg_t* _rti_rasterize_arg;
 struct _rti_rasterize_arg_t {

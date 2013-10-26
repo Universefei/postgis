@@ -265,7 +265,7 @@ rt_band_from_wkb(
 
 	/* And we should check if the band is a nodata band */
 	/* TODO: No!! This is too slow */
-	/*rt_band_check_is_nodata(band);*/
+	/* rt_band_check_is_nodata(band);*/
 
 	return band;
 }

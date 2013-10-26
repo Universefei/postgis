@@ -2264,8 +2264,18 @@ struct rt_raster_t {
     int32_t srid; /* spatial reference id */
     uint16_t width; /* pixel columns - max 65535 */
     uint16_t height; /* pixel rows - max 65535 */
-    rt_band *bands; /* actual bands */
 
+		/**
+		 * Why using rt_band* instead of rt_band_t*
+		 * ========================================
+		 * A pointer only take 4 bytes,this means bands point to a address
+		 * that placed sequential pointers,this pointer point to heap memory
+		 * where rt_band_t stored seperatly!
+		 * 1] if use rt_band_t ,it need to store a array of rt_band_t struture
+		 *    in a linear memory,maybe system do not have that much linear memory!
+		 */
+    rt_band *bands; /* actual bands */
+	
 };
 
 struct rt_extband_t {
