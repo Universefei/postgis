@@ -198,6 +198,9 @@ uint8_t
 read_uint8(const uint8_t** from) {
     assert(NULL != from);
 
+		/* why ++? */
+		/* will change the value of *from */
+		/* pap(pointer after pointer) from is just a tag head address */
     return *(*from)++;
 }
 
@@ -240,7 +243,7 @@ read_uint16(const uint8_t** from, uint8_t littleEndian) {
         ret = (*from)[0] << 8 |
                 (*from)[1];
     }
-    *from += 2;
+    *from += 2; /* every offset (byte units) */
     return ret;
 }
 

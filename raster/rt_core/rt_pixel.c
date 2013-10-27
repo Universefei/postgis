@@ -35,6 +35,7 @@
 * rt_pixeltype
 ******************************************************************************/
 
+/* return amount of bytes */
 int
 rt_pixtype_size(rt_pixtype pixtype) {
 	int pixbytes = -1;

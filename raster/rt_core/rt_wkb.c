@@ -26,6 +26,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
+ ******************************************************************************
+ *
+ * Functions of rt_wkb.c
+ *
+ *
  */
 
 #include "librtcore.h"
@@ -37,17 +42,17 @@
  *****************************************************************************/
 
 /* Read band from WKB as at start of band */
-static rt_band
+static rt_band /* static function!! use locally */
 rt_band_from_wkb(
 	uint16_t width, uint16_t height,
 	const uint8_t** ptr, const uint8_t* end,
 	uint8_t littleEndian
 ) {
-	/* variables declartion */
+	/* variables declaration and initialization */
 	rt_band band = NULL;
 	int pixbytes = 0;
 	uint8_t type = 0;
-	unsigned long sz = 0;
+	unsigned long sz = 0; /* size = sz */
 	uint32_t v = 0;
 
 	assert(NULL != ptr);
@@ -60,7 +65,7 @@ rt_band_from_wkb(
 		return NULL;
 	}
 
-	/* set band member values */
+	/* set values */
 	band->ownsdata = 0; /* assume we don't own data */
 
 	if (end - *ptr < 1) {
@@ -69,8 +74,9 @@ rt_band_from_wkb(
 		rt_band_destroy(band);
 		return NULL;
 	}
+	/* get a value and change *from */
 	type = read_uint8(ptr);
-
+	/* if pixel type is out of definition ranges */
 	if ((type & BANDTYPE_PIXTYPE_MASK) >= PT_END) {
 		rterror("rt_band_from_wkb: Invalid pixtype %d", type & BANDTYPE_PIXTYPE_MASK);
 		rt_band_destroy(band);
@@ -91,6 +97,9 @@ rt_band_from_wkb(
 	);
 
 	/* Check there's enough bytes to read nodata value */
+	/**
+	 * what's the layout of the WKB package format?
+	 */
 	pixbytes = rt_pixtype_size(band->pixtype);
 	if (((*ptr) + pixbytes) >= end) {
 		rterror("rt_band_from_wkb: Premature end of WKB on band novalue reading");
@@ -180,7 +189,7 @@ rt_band_from_wkb(
 			/* we never own offline band data */
 			band->ownsdata = 0;
 
-			band->data.offline.path = rtalloc(sz + 1);
+			band->data.offline.path = rtalloc(sz + 1);/* + 1 because the "\0" at the end of the string */
 			if (band->data.offline.path == NULL) {
 				rterror("rt_band_from_wkb: Out of memory allocating for offline path of band");
 				rt_band_destroy(band);
@@ -201,7 +210,7 @@ rt_band_from_wkb(
 		}
 
 		return band;
-	}
+	} /* end of offline band */
 
 	/* This is an on-disk band */
 	sz = width * height * pixbytes;

@@ -136,6 +136,12 @@
 #include "ogr_api.h"
 #include "ogr_srs_api.h"
 
+/******************************************************************************
+ *                                                                            *
+ *                     Types and Structures Definitions                       *
+ *                                                                            *
+ *****************************************************************************/
+
 /**
  * Types definitions
  */
@@ -227,6 +233,348 @@ typedef void* (*rt_reallocator)(void *mem, size_t size);
 typedef void  (*rt_deallocator)(void *mem);
 typedef void  (*rt_message_handler)(const char* string, va_list ap);
 
+/*
+	helper macros for consistent floating point equality checks
+*/
+#define FLT_NEQ(x, y) (fabs(x - y) > FLT_EPSILON)
+#define FLT_EQ(x, y) (!FLT_NEQ(x, y))
+#define DBL_NEQ(x, y) (fabs(x - y) > DBL_EPSILON)
+#define DBL_EQ(x, y) (!DBL_NEQ(x, y))
+
+/*
+	helper macro for symmetrical rounding
+*/
+#define ROUND(x, y) (((x > 0.0) ? floor((x * pow(10, y) + 0.5)) : ceil((x * pow(10, y) - 0.5))) / pow(10, y))
+
+/******************************************************************************
+ * Struct definitions
+ *
+ * These structs are defined here as they are needed elsewhere
+ * including rt_pg/rt_pg.c and reduce duplicative declarations
+ *
+ ******************************************************************************/
+struct rt_raster_serialized_t {
+    /* ---[ 8 byte boundary ]---{ */
+    uint32_t size; /* required by postgresql: 4 bytes */
+    uint16_t version; /* format version (this is version 0): 2 bytes */
+    uint16_t numBands; /* Number of bands: 2 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double scaleX; /* pixel width: 8 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double scaleY; /* pixel height: 8 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double ipX; /* insertion point X: 8 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double ipY; /* insertion point Y: 8 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double skewX; /* skew about the X axis: 8 bytes */
+
+    /* }---[ 8 byte boundary ]---{ */
+    double skewY; /* skew about the Y axis: 8 bytes */
+
+    /* }---[ 8 byte boundary ]--- */
+    int32_t srid; /* Spatial reference id: 4 bytes */
+    uint16_t width; /* pixel columns: 2 bytes */
+    uint16_t height; /* pixel rows: 2 bytes */
+};
+
+/* NOTE: the initial part of this structure matches the layout
+ *       of data in the serialized form version 0, starting
+ *       from the numBands element
+ */
+
+/****[ other info ]*************************************************************
+ *
+ *  uint32_t size; 
+ *  uint16_t version
+ *  int32_t srid;
+ *
+ ***[ Georeference (in projection units) ]*************************************
+ *
+ *  double scaleX; 
+ *  double scaleY;
+ *  double ipX; 
+ *  double ipY;
+ *  double skewX; 
+ *  double skewY;
+ *
+ ***[ 3 demension metadata ]***************************************************
+ *
+ *  unit16_t width;
+ *  unit16_t height;
+ *  unit16_t numBands;
+ *
+ ***[ real data ]************************************************************** 
+ *
+ *  rt_band *bands;
+ *****************************************************************************/
+struct rt_raster_t {
+    uint32_t size;
+    uint16_t version;
+
+    /* Number of bands, all share the same dimension
+     * and georeference */
+    uint16_t numBands;
+
+    /* Georeference (in projection units) */
+    double scaleX; /* pixel width */
+    double scaleY; /* pixel height */
+    double ipX; /* geo x ordinate of the corner of upper-left pixel */
+    double ipY; /* geo y ordinate of the corner of bottom-right pixel */
+    double skewX; /* skew about the X axis*/
+    double skewY; /* skew about the Y axis */
+
+    int32_t srid; /* spatial reference id */
+    uint16_t width; /* pixel columns - max 65535 */
+    uint16_t height; /* pixel rows - max 65535 */
+
+		/**
+		 * Why using rt_band* instead of rt_band_t*
+		 * ========================================
+		 * A pointer only take 4 bytes,this means bands point to a address
+		 * that placed sequential pointers,this pointer point to heap memory
+		 * where rt_band_t stored seperatly!
+		 * 1] if use rt_band_t ,it need to store a array of rt_band_t struture
+		 *    in a linear memory,maybe system do not have that much linear memory!
+		 */
+    rt_band *bands; /* actual bands */
+	
+};
+
+struct rt_extband_t {
+    uint8_t bandNum; /* 0-based */
+    char* path; /* internally owned */
+		void *mem; /* loaded external band data, internally owned */
+};
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                               rt_band_t                                   */
+/*                                                                           */
+/*    1) About nodata (needn't to io if wanna judge if nodata)               */
+/*       * hasnodata (dirty/polluted)                                        */
+/*       * isnodata  (totally polluted)                                      */
+/*       * nodataval (value represent nodata)                                */
+/*                                                                           */
+/*    2) 2 dimension info                                                    */
+/*       * width                                                             */
+/*       * height                                                            */
+/*                                                                           */
+/*    3) Real data related                                                   */
+/*       * pixtype                                                           */
+/*       * offline  (indb or outdb)                                          */
+/*       * ownsdata (if memory owns real data)                               */
+/*       * data                                                              */
+/*       * raster                                                            */
+/*---------------------------------------------------------------------------*/
+struct rt_band_t {
+    rt_pixtype pixtype;
+    int32_t offline;
+    uint16_t width;
+    uint16_t height;
+
+		/* About nodata */
+    int32_t hasnodata; /* a flag indicating if this band contains nodata values */
+    int32_t isnodata;   /* a flag indicating if this band is filled only with
+                           nodata values. flag CANNOT be TRUE if hasnodata is FALSE */
+    double nodataval; /* int will be converted ... */
+
+		/* data info */
+    int8_t ownsdata; /* 0, externally owned. 1, internally owned. only applies to data.mem */
+    /* if memory owns real data */
+		rt_raster raster; /* reference to parent raster */
+
+    union {
+        void* mem; /* actual data, externally owned */
+        struct rt_extband_t offline;
+    } data;
+
+};
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              rt_pixel_t                                   */
+/*                                                                           */
+/*     1) coordinate info                                                    */
+/*        * x (column)                                                       */
+/*        * y (line)                                                         */
+/*                                                                           */
+/*     2) value info                                                         */
+/*        * nodata (bool semantically: if this pixel is nodata)              */
+/*        * value                                                            */
+/*                                                                           */
+/*     3) geom                                                               */
+/*        * geom                                                             */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*---------------------------------------------------------------------------*/
+struct rt_pixel_t {
+	int x; /* column */
+	int y; /* line */
+
+	uint8_t nodata;/* indecate if this pixel is nodata? */
+	double value;
+
+	LWGEOM *geom;/* do not know */
+};
+
+/* polygon as LWPOLY with associated value */
+struct rt_geomval_t {
+	LWPOLY *geom;
+	double val;
+};
+
+/* summary stats of specified band */
+struct rt_bandstats_t {
+	double sample;
+	uint32_t count;
+
+	double min;
+	double max;
+	double sum;
+	double mean;
+	double stddev;
+
+	double *values;
+	int sorted; /* flag indicating that values is sorted ascending by value */
+};
+
+/* histogram bin(s) of specified band */
+struct rt_histogram_t {
+	uint32_t count;
+	double percent;
+
+	double min;
+	double max;
+
+	int inc_min;
+	int inc_max;
+};
+
+/* quantile(s) of the specified band */
+struct rt_quantile_t {
+	double quantile;
+	double value;
+	uint32_t has_value;
+};
+
+/* listed-list structures for rt_band_get_quantiles_stream */
+struct quantile_llist {
+	uint8_t algeq; /* AL-GEQ (1) or AL-GT (0) */
+	double quantile;
+	uint64_t tau; /* position in sequence */
+
+	struct quantile_llist_element *head; /* H index 0 */
+	struct quantile_llist_element *tail; /* H index last */
+	uint32_t count; /* # of elements in H */
+
+	/* faster access to elements at specific intervals */
+	struct quantile_llist_index *index;
+	uint32_t index_max; /* max # of elements in index */
+
+	uint64_t sum1; /* N1H */
+	uint64_t sum2; /* N2H */
+};
+
+struct quantile_llist_element {
+	double value;
+	uint32_t count;
+
+	struct quantile_llist_element *prev;
+	struct quantile_llist_element *next;
+};
+
+struct quantile_llist_index {
+	struct quantile_llist_element *element;
+	uint32_t index;
+};
+
+/* number of times a value occurs */
+struct rt_valuecount_t {
+	double value;
+	uint32_t count;
+	double percent;
+};
+
+/* reclassification expression */
+struct rt_reclassexpr_t {
+	struct rt_reclassrange {
+		double min;
+		double max;
+		int inc_min; /* include min */
+		int inc_max; /* include max */
+		int exc_min; /* exceed min */
+		int exc_max; /* exceed max */
+	} src, dst;
+};
+
+/* raster iterator */
+struct rt_iterator_t {
+	rt_raster raster;
+	uint16_t nband; /* 0-based */
+	uint8_t nbnodata; /* no band = treat as NODATA  */
+};
+
+/* callback argument from raster iterator */
+struct rt_iterator_arg_t {
+	/* # of rasters, Z-axis */
+	uint16_t rasters;
+	/* # of rows, Y-axis */
+	uint32_t rows;
+	/* # of columns, X-axis */
+	uint32_t columns;
+
+	/* axis order: Z,X,Y */
+	/* individual pixel values */
+	double ***values;
+	/* 0,1 value of nodata flag */
+	int ***nodata;
+
+	/* X,Y of pixel from each input raster */
+	int **src_pixel;
+
+	/* X,Y of pixel from output raster */
+	int dst_pixel[2];
+};
+
+/* gdal driver information */
+struct rt_gdaldriver_t {
+	int idx;
+	char *short_name;
+	char *long_name;
+	char *create_options;
+};
+
+/* raster colormap entry */
+struct rt_colormap_entry_t {
+	int isnodata;
+	double value;
+	uint8_t color[4]; /* RGBA */
+};
+
+struct rt_colormap_t {
+	enum {
+		CM_INTERPOLATE,
+		CM_EXACT,
+		CM_NEAREST
+	} method;
+
+	int ncolor;
+	uint16_t nentry;
+	rt_colormap_entry entry;
+};
+
+/******************************************************************************
+ *                                                                            *
+ *                                rt_context                                  *
+ *                                                                            *
+ *****************************************************************************/
+
 /****************************************************************************
  * Functions that must be implemented for the raster core function's caller
  * (for example: rt_pg functions, test functions, future loader/exporter)
@@ -317,7 +665,11 @@ void rt_set_handlers(rt_allocator allocator, rt_reallocator reallocator,
         rt_deallocator deallocator, rt_message_handler error_handler,
         rt_message_handler info_handler, rt_message_handler warning_handler);
 
-
+/******************************************************************************
+ *                                                                            *
+ *                             rt_pixel                                       *
+ *                                                                            *
+ *****************************************************************************/
 
 /*- rt_pixtype --------------------------------------------------------*/
 
@@ -403,7 +755,11 @@ rt_errorstate rt_pixel_set_to_array(
 	int *dimx, int *dimy
 );
 
-/*- rt_band ----------------------------------------------------------*/
+/******************************************************************************
+ *                                                                            *
+ *                            rt_band                                         *
+ *                                                                            *
+ *****************************************************************************/
 
 /**
  * Create an in-db rt_band with no data
@@ -807,6 +1163,12 @@ rt_band_corrected_clamped_value(
 	double *newval, int *corrected
 );
 
+/******************************************************************************
+ *                                                                            *
+ *                            rt_statistices.c                                *
+ *                                                                            *
+ *****************************************************************************/
+
 /**
  * Compute summary statistics for a band
  *
@@ -927,6 +1289,12 @@ rt_valuecount rt_band_get_value_count(
 	uint32_t *rtn_total, uint32_t *rtn_count
 );
 
+/******************************************************************************
+ *                                                                            *
+ *                           rt_mapalgebra.c                                  *
+ *                                                                            *
+ *****************************************************************************/
+
 /**
  * Returns new band with values reclassified
  * 
@@ -945,7 +1313,11 @@ rt_band rt_band_reclass(
 	rt_reclassexpr *exprset, int exprcount
 );
 
-/*- rt_raster --------------------------------------------------------*/
+/******************************************************************************
+ *                                                                            *
+ *                            rt_raster.c                                     *
+ *                                                                            *
+ *****************************************************************************/
 
 /**
  * Construct a raster with given dimensions.
@@ -1386,6 +1758,12 @@ rt_raster_compute_skewed_raster(
 	double tolerance
 );
 
+/******************************************************************************
+ *                                                                            *
+ *                             rt_geometry.c                                  *
+ *                                                                            *
+ *****************************************************************************/
+
 /**
  * Get a raster pixel as a polygon.
  *
@@ -1440,6 +1818,12 @@ rt_raster_gdal_polygonize(
 	int exclude_nodata_value,
 	int * pnElements
 );
+
+/******************************************************************************
+ *                                                                            *
+ *                              rt_serialize.c                                *
+ *                                                                            *
+ *****************************************************************************/
 
 /**
  * Return this raster in serialized form.
@@ -2162,302 +2546,5 @@ rt_util_hsv_to_rgb(
 	double hsv[3],
 	double rgb[3]
 );
-
-/*
-	helper macros for consistent floating point equality checks
-*/
-#define FLT_NEQ(x, y) (fabs(x - y) > FLT_EPSILON)
-#define FLT_EQ(x, y) (!FLT_NEQ(x, y))
-#define DBL_NEQ(x, y) (fabs(x - y) > DBL_EPSILON)
-#define DBL_EQ(x, y) (!DBL_NEQ(x, y))
-
-/*
-	helper macro for symmetrical rounding
-*/
-#define ROUND(x, y) (((x > 0.0) ? floor((x * pow(10, y) + 0.5)) : ceil((x * pow(10, y) - 0.5))) / pow(10, y))
-
-/******************************************************************************
- * Struct definitions
- *
- * These structs are defined here as they are needed elsewhere
- * including rt_pg/rt_pg.c and reduce duplicative declarations
- *
- ******************************************************************************/
-struct rt_raster_serialized_t {
-    /* ---[ 8 byte boundary ]---{ */
-    uint32_t size; /* required by postgresql: 4 bytes */
-    uint16_t version; /* format version (this is version 0): 2 bytes */
-    uint16_t numBands; /* Number of bands: 2 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double scaleX; /* pixel width: 8 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double scaleY; /* pixel height: 8 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double ipX; /* insertion point X: 8 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double ipY; /* insertion point Y: 8 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double skewX; /* skew about the X axis: 8 bytes */
-
-    /* }---[ 8 byte boundary ]---{ */
-    double skewY; /* skew about the Y axis: 8 bytes */
-
-    /* }---[ 8 byte boundary ]--- */
-    int32_t srid; /* Spatial reference id: 4 bytes */
-    uint16_t width; /* pixel columns: 2 bytes */
-    uint16_t height; /* pixel rows: 2 bytes */
-};
-
-/* NOTE: the initial part of this structure matches the layout
- *       of data in the serialized form version 0, starting
- *       from the numBands element
- */
-
-/******************************************************************************
- ***[ other info ]*************************************************************
- *
- *  uint32_t size; 
- *  uint16_t version
- *  int32_t srid;
- *
- ***[ Georeference (in projection units) ]*************************************
- *
- *  double scaleX; 
- *  double scaleY;
- *  double ipX; 
- *  double ipY;
- *  double skewX; 
- *  double skewY;
- *
- ***[ 3 demension metadata ]***************************************************
- *
- *  unit16_t width;
- *  unit16_t height;
- *  unit16_t numBands;
- *
- ***[ real data ]************************************************************** 
- *
- *  rt_band *bands;
- *
- *****************************************************************************/
-struct rt_raster_t {
-    uint32_t size;
-    uint16_t version;
-
-    /* Number of bands, all share the same dimension
-     * and georeference */
-    uint16_t numBands;
-
-    /* Georeference (in projection units) */
-    double scaleX; /* pixel width */
-    double scaleY; /* pixel height */
-    double ipX; /* geo x ordinate of the corner of upper-left pixel */
-    double ipY; /* geo y ordinate of the corner of bottom-right pixel */
-    double skewX; /* skew about the X axis*/
-    double skewY; /* skew about the Y axis */
-
-    int32_t srid; /* spatial reference id */
-    uint16_t width; /* pixel columns - max 65535 */
-    uint16_t height; /* pixel rows - max 65535 */
-
-		/**
-		 * Why using rt_band* instead of rt_band_t*
-		 * ========================================
-		 * A pointer only take 4 bytes,this means bands point to a address
-		 * that placed sequential pointers,this pointer point to heap memory
-		 * where rt_band_t stored seperatly!
-		 * 1] if use rt_band_t ,it need to store a array of rt_band_t struture
-		 *    in a linear memory,maybe system do not have that much linear memory!
-		 */
-    rt_band *bands; /* actual bands */
-	
-};
-
-struct rt_extband_t {
-    uint8_t bandNum; /* 0-based */
-    char* path; /* internally owned */
-		void *mem; /* loaded external band data, internally owned */
-};
-
-struct rt_band_t {
-    rt_pixtype pixtype;
-    int32_t offline;
-    uint16_t width;
-    uint16_t height;
-    int32_t hasnodata; /* a flag indicating if this band contains nodata values */
-    int32_t isnodata;   /* a flag indicating if this band is filled only with
-                           nodata values. flag CANNOT be TRUE if hasnodata is FALSE */
-    double nodataval; /* int will be converted ... */
-    int8_t ownsdata; /* 0, externally owned. 1, internally owned. only applies to data.mem */
-
-		rt_raster raster; /* reference to parent raster */
-
-    union {
-        void* mem; /* actual data, externally owned */
-        struct rt_extband_t offline;
-    } data;
-
-};
-
-struct rt_pixel_t {
-	int x; /* column */
-	int y; /* line */
-
-	uint8_t nodata;/* indecate if this pixel is nodata? */
-	double value;
-
-	LWGEOM *geom;/* do not know */
-};
-
-/* polygon as LWPOLY with associated value */
-struct rt_geomval_t {
-	LWPOLY *geom;
-	double val;
-};
-
-/* summary stats of specified band */
-struct rt_bandstats_t {
-	double sample;
-	uint32_t count;
-
-	double min;
-	double max;
-	double sum;
-	double mean;
-	double stddev;
-
-	double *values;
-	int sorted; /* flag indicating that values is sorted ascending by value */
-};
-
-/* histogram bin(s) of specified band */
-struct rt_histogram_t {
-	uint32_t count;
-	double percent;
-
-	double min;
-	double max;
-
-	int inc_min;
-	int inc_max;
-};
-
-/* quantile(s) of the specified band */
-struct rt_quantile_t {
-	double quantile;
-	double value;
-	uint32_t has_value;
-};
-
-/* listed-list structures for rt_band_get_quantiles_stream */
-struct quantile_llist {
-	uint8_t algeq; /* AL-GEQ (1) or AL-GT (0) */
-	double quantile;
-	uint64_t tau; /* position in sequence */
-
-	struct quantile_llist_element *head; /* H index 0 */
-	struct quantile_llist_element *tail; /* H index last */
-	uint32_t count; /* # of elements in H */
-
-	/* faster access to elements at specific intervals */
-	struct quantile_llist_index *index;
-	uint32_t index_max; /* max # of elements in index */
-
-	uint64_t sum1; /* N1H */
-	uint64_t sum2; /* N2H */
-};
-
-struct quantile_llist_element {
-	double value;
-	uint32_t count;
-
-	struct quantile_llist_element *prev;
-	struct quantile_llist_element *next;
-};
-
-struct quantile_llist_index {
-	struct quantile_llist_element *element;
-	uint32_t index;
-};
-
-/* number of times a value occurs */
-struct rt_valuecount_t {
-	double value;
-	uint32_t count;
-	double percent;
-};
-
-/* reclassification expression */
-struct rt_reclassexpr_t {
-	struct rt_reclassrange {
-		double min;
-		double max;
-		int inc_min; /* include min */
-		int inc_max; /* include max */
-		int exc_min; /* exceed min */
-		int exc_max; /* exceed max */
-	} src, dst;
-};
-
-/* raster iterator */
-struct rt_iterator_t {
-	rt_raster raster;
-	uint16_t nband; /* 0-based */
-	uint8_t nbnodata; /* no band = treat as NODATA  */
-};
-
-/* callback argument from raster iterator */
-struct rt_iterator_arg_t {
-	/* # of rasters, Z-axis */
-	uint16_t rasters;
-	/* # of rows, Y-axis */
-	uint32_t rows;
-	/* # of columns, X-axis */
-	uint32_t columns;
-
-	/* axis order: Z,X,Y */
-	/* individual pixel values */
-	double ***values;
-	/* 0,1 value of nodata flag */
-	int ***nodata;
-
-	/* X,Y of pixel from each input raster */
-	int **src_pixel;
-
-	/* X,Y of pixel from output raster */
-	int dst_pixel[2];
-};
-
-/* gdal driver information */
-struct rt_gdaldriver_t {
-	int idx;
-	char *short_name;
-	char *long_name;
-	char *create_options;
-};
-
-/* raster colormap entry */
-struct rt_colormap_entry_t {
-	int isnodata;
-	double value;
-	uint8_t color[4]; /* RGBA */
-};
-
-struct rt_colormap_t {
-	enum {
-		CM_INTERPOLATE,
-		CM_EXACT,
-		CM_NEAREST
-	} method;
-
-	int ncolor;
-	uint16_t nentry;
-	rt_colormap_entry entry;
-};
 
 #endif /* LIBRTCORE_H_INCLUDED */

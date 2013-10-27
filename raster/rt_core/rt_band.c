@@ -300,6 +300,7 @@ rt_band_destroy(rt_band band) {
 /*---------------------------------------------------------------------------*/
 		rtdealloc(band->data.mem);
 
+	/* no matter how, all need to recycle band */
 	rtdealloc(band);
 }
 
