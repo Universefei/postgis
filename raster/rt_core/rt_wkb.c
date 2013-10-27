@@ -27,10 +27,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  ******************************************************************************
+ *                      Functions of rt_wkb.c
  *
- * Functions of rt_wkb.c
+ *     rt_band_from_wkb()
  *
- *
+ *     rt_raster_from_wkb()
+ *     rt_raster_from_hexwkb()
+ *     rt_raster_to_wkb()
+ *     rt_raster-to_hexwkb()
+ * 
+ *     rt_raster_wkb_size()
  */
 
 #include "librtcore.h"
@@ -74,8 +80,14 @@ rt_band_from_wkb(
 		rt_band_destroy(band);
 		return NULL;
 	}
-	/* get a value and change *from */
+
+	/* what have done when call read_uint8(ptr)
+   * ========================================
+	 * 1] return a vlue
+	 * 2] modify *from (pointer go one step further)
+	 */
 	type = read_uint8(ptr);
+
 	/* if pixel type is out of definition ranges */
 	if ((type & BANDTYPE_PIXTYPE_MASK) >= PT_END) {
 		rterror("rt_band_from_wkb: Invalid pixtype %d", type & BANDTYPE_PIXTYPE_MASK);
@@ -107,33 +119,36 @@ rt_band_from_wkb(
 		return NULL;
 	}
 
+/*---------------------------------------------------------------------------*/
+/*                            nodataval matters                              */
+/*---------------------------------------------------------------------------*/
 	/* Read nodata value */
 	switch (band->pixtype) {
-		case PT_1BB: {
-			band->nodataval = ((int) read_uint8(ptr)) & 0x01;
+		case PT_1BB: { /* 1 bit */
+			band->nodataval = ((int) read_uint8(ptr)) & 0x01; /* & to clamp */
 			break;
 		}
-		case PT_2BUI: {
+		case PT_2BUI: { /* 2 bit unsigned int */
 			band->nodataval = ((int) read_uint8(ptr)) & 0x03;
 			break;
 		}
-		case PT_4BUI: {
+		case PT_4BUI: { /* 4 bit unsigned int */
 			band->nodataval = ((int) read_uint8(ptr)) & 0x0F;
 			break;
 		}
-		case PT_8BSI: {
+		case PT_8BSI: { /* 8 bit signed int */
 			band->nodataval = read_int8(ptr);
 			break;
 		}
-		case PT_8BUI: {
+		case PT_8BUI: { /* 8 bit unsigned int */
 			band->nodataval = read_uint8(ptr);
 			break;
 		}
-		case PT_16BSI: {
+		case PT_16BSI: { /* 16 bit signed int */
 			band->nodataval = read_int16(ptr, littleEndian);
 			break;
 		}
-		case PT_16BUI: {
+		case PT_16BUI: { /* 16 bit = 2 Bytes unsigned int */
 			band->nodataval = read_uint16(ptr, littleEndian);
 			break;
 		}
@@ -163,6 +178,11 @@ rt_band_from_wkb(
 	RASTER_DEBUGF(3, " Nodata value: %g, pixbytes: %d, ptr @ %p, end @ %p",
 		band->nodataval, pixbytes, *ptr, end);
 
+/*---------------------------------------------------------------------------*/
+/*                           real data matters                               */
+/*                                                                           */
+/*                                                                           */
+/*---------------------------------------------------------------------------*/
 	if (band->offline) {
 		if (((*ptr) + 1) >= end) {
 			rterror("rt_band_from_wkb: Premature end of WKB on offline "
@@ -174,10 +194,11 @@ rt_band_from_wkb(
 		}
 
 		band->data.offline.bandNum = read_int8(ptr);
+		/* no real data in memory */
 		band->data.offline.mem = NULL;
 
 		{
-			/* check we have a NULL-termination */
+			/* check we have a NULL-termination NULL 终止符 */
 			sz = 0;
 			while ((*ptr)[sz] && &((*ptr)[sz]) < end) ++sz;
 			if (&((*ptr)[sz]) >= end) {
@@ -189,6 +210,7 @@ rt_band_from_wkb(
 			/* we never own offline band data */
 			band->ownsdata = 0;
 
+			/* set out mem data path */
 			band->data.offline.path = rtalloc(sz + 1);/* + 1 because the "\0" at the end of the string */
 			if (band->data.offline.path == NULL) {
 				rterror("rt_band_from_wkb: Out of memory allocating for offline path of band");
@@ -229,14 +251,24 @@ rt_band_from_wkb(
 	}
 
 	band->ownsdata = 1; /* we DO own this data!!! */
+	/* WKB include real data, then copy memory directly */
 	memcpy(band->data.mem, *ptr, sz);
 	*ptr += sz;
+
+/*---------------------------------------------------------------------------*/
+/*                            Endian matters                                 */
+/*---------------------------------------------------------------------------*/
 
 	/* Should now flip values if > 8bit and
 	 * littleEndian != isMachineLittleEndian */
 	if (pixbytes > 1) {
 		if (isMachineLittleEndian() != littleEndian) {
-			void (*flipper)(uint8_t*) = 0;
+						
+			/* the function of flipper
+			 * =======================
+			 * 1] solve the clash of different Endlians
+			 */
+			void (*flipper)(uint8_t*) = 0; /* function pointer (function variables) */
 			uint8_t *flipme = NULL;
 
 			if (pixbytes == 2)
@@ -251,11 +283,13 @@ rt_band_from_wkb(
 				return NULL;
 			}
 
+			/* for real data in heap, Endlians convert */
 			flipme = band->data.mem;
 			sz = width * height;
 			for (v = 0; v < sz; ++v) {
 				flipper(flipme);
-				flipme += pixbytes;
+				flipme += pixbytes; 
+				/* set pixbytes as unit, loop for sz times,so handle (width * height * pixbytes) bytes */
 			}
 		}
 	}
@@ -265,6 +299,11 @@ rt_band_from_wkb(
 		band->pixtype == PT_2BUI ||
 		band->pixtype == PT_4BUI
 	) {
+    /* niubilious */
+
+    /**
+     * assigenment if/else
+     */
 		uint8_t maxVal = band->pixtype == PT_1BB ? 1 : (band->pixtype == PT_2BUI ? 3 : 15);
 		uint8_t val;
 
@@ -294,16 +333,27 @@ rt_band_from_wkb(
  * rt_raster_from_wkb()
  *****************************************************************************/
 
+/**
+ * return a raster(pointer to a rt_raster_t stucture in heap) from a input 
+ * Well-Known-Binary(WBK) pointer
+ *
+ * @param i *wkb : pointer to WKB needed to be parsed
+ * @param i wkbsize : the length of wkb (byte as unit)
+ *
+ * @return a pointer to result raster (rt_raster_t type)
+ */
+
 rt_raster
 rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 	const uint8_t *ptr = wkb;
 	const uint8_t *wkbend = NULL;
-	rt_raster rast = NULL;
+	rt_raster rast = NULL; /* pointer type */
 	uint8_t endian = 0;
 	uint16_t version = 0;
 	uint16_t i = 0;
 	uint16_t j = 0;
 
+	/* expression (NULL != ptr) must be true, or process abort here! */
 	assert(NULL != ptr);
 
 	/* Check that wkbsize is >= sizeof(rt_raster_serialized) */
@@ -330,20 +380,25 @@ rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 		return NULL;
 	}
 
+/*---------------------------------------------------------------------------*/
+/*               rt_raster_t structure memory allocation                     */
+/*---------------------------------------------------------------------------*/
 	/* Read other components of raster header */
 	rast = (rt_raster) rtalloc(sizeof (struct rt_raster_t));
-	if (!rast) {
+	if (!rast) { /* rast == NULL */
 		rterror("rt_raster_from_wkb: Out of memory allocating raster for wkb input");
 		return NULL;
 	}
 
 	rast->numBands = read_uint16(&ptr, endian);
+
 	rast->scaleX = read_float64(&ptr, endian);
 	rast->scaleY = read_float64(&ptr, endian);
 	rast->ipX = read_float64(&ptr, endian);
 	rast->ipY = read_float64(&ptr, endian);
 	rast->skewX = read_float64(&ptr, endian);
 	rast->skewY = read_float64(&ptr, endian);
+
 	rast->srid = clamp_srid(read_int32(&ptr, endian));
 	rast->width = read_uint16(&ptr, endian);
 	rast->height = read_uint16(&ptr, endian);
@@ -379,10 +434,14 @@ rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 			rtwarn("We parsed %d bytes more then available!", ptr - wkbend);
 		}
 
+		/* real associated band data pointer */
 		rast->bands = NULL;
 		return rast;
 	}
 
+/*---------------------------------------------------------------------------*/
+/*                    rt_band pointer memory allocation                      */
+/*---------------------------------------------------------------------------*/
 	/* Now read the bands */
 	rast->bands = (rt_band*) rtalloc(sizeof(rt_band) * rast->numBands);
 	if (!rast->bands) {
@@ -427,6 +486,15 @@ rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {
 /******************************************************************************
  * rt_raster_from_hexwkb()
  *****************************************************************************/
+/**
+ * get a rt_raster_t from a hexwkb
+ *
+ * @param i *hexwkb : pointer to hexWKB that needed to be convert from
+ * @param i hexwkbsize : length of hexwkb (notation/char as unit)
+ *
+ * @return a pointer to a rt_raster_t
+ */
+
 
 rt_raster
 rt_raster_from_hexwkb(const char* hexwkb, uint32_t hexwkbsize) {
@@ -444,6 +512,11 @@ rt_raster_from_hexwkb(const char* hexwkb, uint32_t hexwkbsize) {
 		rterror("rt_raster_from_hexwkb: Raster HEXWKB input must have an even number of characters");
 		return NULL;
 	}
+
+	/**
+	 * hexwkbsize bits(not 1/0 bit,maybe means a char, or just  a notation) hex number
+	 * need wkbsize bytes
+	 */
 	wkbsize = hexwkbsize / 2;
 
 	wkb = rtalloc(wkbsize);

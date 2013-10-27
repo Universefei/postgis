@@ -1,0 +1,514 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BANDTYPE_FLAGS_MASK	rt_serialize.h	36;"	d
+BANDTYPE_FLAG_HASNODATA	rt_serialize.h	39;"	d
+BANDTYPE_FLAG_ISNODATA	rt_serialize.h	40;"	d
+BANDTYPE_FLAG_OFFDB	rt_serialize.h	38;"	d
+BANDTYPE_FLAG_RESERVED3	rt_serialize.h	41;"	d
+BANDTYPE_HAS_NODATA	rt_serialize.h	45;"	d
+BANDTYPE_IS_NODATA	rt_serialize.h	46;"	d
+BANDTYPE_IS_OFFDB	rt_serialize.h	44;"	d
+BANDTYPE_PIXTYPE	rt_serialize.h	43;"	d
+BANDTYPE_PIXTYPE_MASK	rt_serialize.h	37;"	d
+CHECK_BINPTR_POSITION	rt_serialize.h	58;"	d
+CHECK_BINPTR_POSITION	rt_serialize.h	66;"	d
+CM_EXACT	librtcore.h	/^		CM_EXACT,$/;"	e	enum:rt_colormap_t::__anon7
+CM_INTERPOLATE	librtcore.h	/^		CM_INTERPOLATE,$/;"	e	enum:rt_colormap_t::__anon7
+CM_NEAREST	librtcore.h	/^		CM_NEAREST$/;"	e	enum:rt_colormap_t::__anon7
+DBL_EQ	librtcore.h	242;"	d
+DBL_NEQ	librtcore.h	241;"	d
+ES_ERROR	librtcore.h	/^	ES_ERROR = 1 \/* generic error *\/$/;"	e	enum:__anon2
+ES_NONE	librtcore.h	/^	ES_NONE = 0, \/* no error *\/$/;"	e	enum:__anon2
+ET_CUSTOM	librtcore.h	/^	ET_CUSTOM$/;"	e	enum:__anon4
+ET_FIRST	librtcore.h	/^	ET_FIRST,$/;"	e	enum:__anon4
+ET_INTERSECTION	librtcore.h	/^	ET_INTERSECTION = 0,$/;"	e	enum:__anon4
+ET_LAST	librtcore.h	/^	ET_LAST,$/;"	e	enum:__anon4
+ET_SECOND	librtcore.h	/^	ET_SECOND,$/;"	e	enum:__anon4
+ET_UNION	librtcore.h	/^	ET_UNION,$/;"	e	enum:__anon4
+FLT_EQ	librtcore.h	240;"	d
+FLT_NEQ	librtcore.h	239;"	d
+GSR_CONTAINS	librtcore.h	/^	GSR_CONTAINS,$/;"	e	enum:__anon5
+GSR_CONTAINSPROPERLY	librtcore.h	/^	GSR_CONTAINSPROPERLY,$/;"	e	enum:__anon5
+GSR_COVEREDBY	librtcore.h	/^	GSR_COVEREDBY$/;"	e	enum:__anon5
+GSR_COVERS	librtcore.h	/^	GSR_COVERS,$/;"	e	enum:__anon5
+GSR_OVERLAPS	librtcore.h	/^	GSR_OVERLAPS = 0,$/;"	e	enum:__anon5
+GSR_TOUCHES	librtcore.h	/^	GSR_TOUCHES,$/;"	e	enum:__anon5
+LIBRTCORE_H_INCLUDED	librtcore.h	60;"	d
+LIBRTCORE_INTERNAL_H_INCLUDED	librtcore_internal.h	32;"	d
+LINUX	librtcore.h	65;"	d
+LINUX	librtcore.h	75;"	d
+MSDOS	librtcore.h	84;"	d
+MSDOS	librtcore.h	93;"	d
+MaxX	librtcore.h	/^	double MaxX;$/;"	m	struct:__anon1
+MaxY	librtcore.h	/^	double MaxY;$/;"	m	struct:__anon1
+MinX	librtcore.h	/^	double MinX;$/;"	m	struct:__anon1
+MinY	librtcore.h	/^	double MinY;$/;"	m	struct:__anon1
+ORDER	rt_statistics.c	39;"	d	file:
+POSTGIS_RASTER_WARN_ON_TRUNCATION	librtcore.h	2388;"	d
+POSTGIS_RT_1BBMAX	librtcore.h	2391;"	d
+POSTGIS_RT_2BUIMAX	librtcore.h	2392;"	d
+POSTGIS_RT_4BUIMAX	librtcore.h	2393;"	d
+PT_16BSI	librtcore.h	/^    PT_16BSI=5,   \/* 16-bit signed integer    *\/$/;"	e	enum:__anon3
+PT_16BUI	librtcore.h	/^    PT_16BUI=6,   \/* 16-bit unsigned integer  *\/$/;"	e	enum:__anon3
+PT_1BB	librtcore.h	/^    PT_1BB=0,     \/* 1-bit boolean            *\/$/;"	e	enum:__anon3
+PT_2BUI	librtcore.h	/^    PT_2BUI=1,    \/* 2-bit unsigned integer   *\/$/;"	e	enum:__anon3
+PT_32BF	librtcore.h	/^    PT_32BF=10,   \/* 32-bit float             *\/$/;"	e	enum:__anon3
+PT_32BSI	librtcore.h	/^    PT_32BSI=7,   \/* 32-bit signed integer    *\/$/;"	e	enum:__anon3
+PT_32BUI	librtcore.h	/^    PT_32BUI=8,   \/* 32-bit unsigned integer  *\/$/;"	e	enum:__anon3
+PT_4BUI	librtcore.h	/^    PT_4BUI=2,    \/* 4-bit unsigned integer   *\/$/;"	e	enum:__anon3
+PT_64BF	librtcore.h	/^    PT_64BF=11,   \/* 64-bit float             *\/$/;"	e	enum:__anon3
+PT_8BSI	librtcore.h	/^    PT_8BSI=3,    \/* 8-bit signed integer     *\/$/;"	e	enum:__anon3
+PT_8BUI	librtcore.h	/^    PT_8BUI=4,    \/* 8-bit unsigned integer   *\/$/;"	e	enum:__anon3
+PT_END	librtcore.h	/^    PT_END=13$/;"	e	enum:__anon3
+RASTER_DEBUG	librtcore.h	641;"	d
+RASTER_DEBUG	librtcore.h	657;"	d
+RASTER_DEBUGF	librtcore.h	648;"	d
+RASTER_DEBUGF	librtcore.h	661;"	d
+ROUND	librtcore.h	247;"	d
+RT_SERIALIZE_H_INCLUDED	rt_serialize.h	32;"	d
+RT_WKB_HDR_SZ	rt_wkb.c	330;"	d	file:
+SWAP	rt_statistics.c	38;"	d	file:
+UNIX	librtcore.h	105;"	d
+UNIX	librtcore.h	68;"	d
+UNIX	librtcore.h	78;"	d
+UNIX	librtcore.h	99;"	d
+UpperLeftX	librtcore.h	/^	double UpperLeftX;$/;"	m	struct:__anon1
+UpperLeftY	librtcore.h	/^	double UpperLeftY;$/;"	m	struct:__anon1
+WIN32	librtcore.h	90;"	d
+_rt_raster_geotransform_warn_offline_band	rt_raster.c	/^_rt_raster_geotransform_warn_offline_band(rt_raster raster) {$/;"	f	file:
+_rti_colormap_arg	rt_mapalgebra.c	/^typedef struct _rti_colormap_arg_t* _rti_colormap_arg;$/;"	t	typeref:struct:_rti_colormap_arg_t	file:
+_rti_colormap_arg_destroy	rt_mapalgebra.c	/^_rti_colormap_arg_destroy(_rti_colormap_arg arg) {$/;"	f	file:
+_rti_colormap_arg_init	rt_mapalgebra.c	/^_rti_colormap_arg_init(rt_raster raster) {$/;"	f	file:
+_rti_colormap_arg_t	rt_mapalgebra.c	/^struct _rti_colormap_arg_t {$/;"	s	file:
+_rti_iterator_arg	rt_mapalgebra.c	/^typedef struct _rti_iterator_arg_t* _rti_iterator_arg;$/;"	t	typeref:struct:_rti_iterator_arg_t	file:
+_rti_iterator_arg_callback_clean	rt_mapalgebra.c	/^_rti_iterator_arg_callback_clean(_rti_iterator_arg _param) {$/;"	f	file:
+_rti_iterator_arg_callback_init	rt_mapalgebra.c	/^_rti_iterator_arg_callback_init(_rti_iterator_arg _param) {$/;"	f	file:
+_rti_iterator_arg_destroy	rt_mapalgebra.c	/^_rti_iterator_arg_destroy(_rti_iterator_arg _param) {$/;"	f	file:
+_rti_iterator_arg_empty_init	rt_mapalgebra.c	/^_rti_iterator_arg_empty_init(_rti_iterator_arg _param) {$/;"	f	file:
+_rti_iterator_arg_init	rt_mapalgebra.c	/^_rti_iterator_arg_init() {$/;"	f	file:
+_rti_iterator_arg_populate	rt_mapalgebra.c	/^_rti_iterator_arg_populate($/;"	f	file:
+_rti_iterator_arg_t	rt_mapalgebra.c	/^struct _rti_iterator_arg_t {$/;"	s	file:
+_rti_raster_get_band_perimeter	rt_geometry.c	/^_rti_raster_get_band_perimeter(rt_band band, uint16_t *trim) {$/;"	f	file:
+_rti_rasterize_arg	rt_raster.c	/^typedef struct _rti_rasterize_arg_t* _rti_rasterize_arg;$/;"	t	typeref:struct:_rti_rasterize_arg_t	file:
+_rti_rasterize_arg_destroy	rt_raster.c	/^_rti_rasterize_arg_destroy(_rti_rasterize_arg arg) {$/;"	f	file:
+_rti_rasterize_arg_init	rt_raster.c	/^_rti_rasterize_arg_init() {$/;"	f	file:
+_rti_rasterize_arg_t	rt_raster.c	/^struct _rti_rasterize_arg_t {$/;"	s	file:
+_rti_warp_arg	rt_warp.c	/^typedef struct _rti_warp_arg_t* _rti_warp_arg;$/;"	t	typeref:struct:_rti_warp_arg_t	file:
+_rti_warp_arg_destroy	rt_warp.c	/^_rti_warp_arg_destroy(_rti_warp_arg arg) {$/;"	f	file:
+_rti_warp_arg_init	rt_warp.c	/^_rti_warp_arg_init() {$/;"	f	file:
+_rti_warp_arg_t	rt_warp.c	/^struct _rti_warp_arg_t {$/;"	s	file:
+algeq	librtcore.h	/^	uint8_t algeq; \/* AL-GEQ (1) or AL-GT (0) *\/$/;"	m	struct:quantile_llist
+alloc	rt_context.c	/^    rt_allocator alloc;$/;"	m	struct:rt_context_t	file:
+approx	rt_warp.c	/^			void *approx;$/;"	m	struct:_rti_warp_arg_t::__anon9::__anon11	file:
+arg	rt_mapalgebra.c	/^	rt_iterator_arg arg;$/;"	m	struct:_rti_iterator_arg_t	file:
+arg	rt_warp.c	/^		} arg;$/;"	m	struct:_rti_warp_arg_t::__anon9	typeref:struct:_rti_warp_arg_t::__anon9::__anon11	file:
+band	rt_mapalgebra.c	/^	rt_band band;$/;"	m	struct:_rti_colormap_arg_t	file:
+band	rt_mapalgebra.c	/^	} band;$/;"	m	struct:_rti_iterator_arg_t	typeref:struct:_rti_iterator_arg_t::__anon12	file:
+bandNum	librtcore.h	/^    uint8_t bandNum; \/* 0-based *\/$/;"	m	struct:rt_extband_t
+bandlist	rt_raster.c	/^	int *bandlist;$/;"	m	struct:_rti_rasterize_arg_t	file:
+bands	librtcore.h	/^    rt_band *bands; \/* actual bands *\/$/;"	m	struct:rt_raster_t
+color	librtcore.h	/^	uint8_t color[4]; \/* RGBA *\/$/;"	m	struct:rt_colormap_entry_t
+columns	librtcore.h	/^	uint32_t columns;$/;"	m	struct:rt_iterator_arg_t
+columns	rt_mapalgebra.c	/^		uint32_t columns;$/;"	m	struct:_rti_iterator_arg_t::__anon14	file:
+count	librtcore.h	/^	uint32_t count; \/* # of elements in H *\/$/;"	m	struct:quantile_llist
+count	librtcore.h	/^	uint32_t count;$/;"	m	struct:quantile_llist_element
+count	librtcore.h	/^	uint32_t count;$/;"	m	struct:rt_bandstats_t
+count	librtcore.h	/^	uint32_t count;$/;"	m	struct:rt_histogram_t
+count	librtcore.h	/^	uint32_t count;$/;"	m	struct:rt_valuecount_t
+count	rt_mapalgebra.c	/^	int count;$/;"	m	struct:_rti_iterator_arg_t	file:
+create_options	librtcore.h	/^	char *create_options;$/;"	m	struct:rt_gdaldriver_t
+ctx_t	rt_context.c	/^static struct rt_context_t ctx_t = {$/;"	v	typeref:struct:rt_context_t	file:
+d_binary_to_hex	rt_serialize.c	/^d_binary_to_hex(const uint8_t * const raw, uint32_t size, uint32_t *hexsize) {$/;"	f
+d_binptr_to_pos	rt_serialize.c	/^d_binptr_to_pos(const uint8_t * const ptr, const uint8_t * const end, size_t size) {$/;"	f
+d_print_binary_hex	rt_serialize.c	/^d_print_binary_hex(const char* msg, const uint8_t * const raw, uint32_t size) {$/;"	f
+data	librtcore.h	/^    } data;$/;"	m	struct:rt_band_t	typeref:union:rt_band_t::__anon6
+dealloc	rt_context.c	/^    rt_deallocator dealloc;$/;"	m	struct:rt_context_t	file:
+default_rt_allocator	rt_context.c	/^default_rt_allocator(size_t size)$/;"	f
+default_rt_deallocator	rt_context.c	/^default_rt_deallocator(void *mem)$/;"	f
+default_rt_error_handler	rt_context.c	/^default_rt_error_handler(const char *fmt, va_list ap) {$/;"	f
+default_rt_info_handler	rt_context.c	/^default_rt_info_handler(const char *fmt, va_list ap) {$/;"	f
+default_rt_reallocator	rt_context.c	/^default_rt_reallocator(void *mem, size_t size)$/;"	f
+default_rt_warning_handler	rt_context.c	/^default_rt_warning_handler(const char *fmt, va_list ap) {$/;"	f
+dimension	rt_mapalgebra.c	/^	} dimension;$/;"	m	struct:_rti_iterator_arg_t	typeref:struct:_rti_iterator_arg_t::__anon14	file:
+distance	rt_mapalgebra.c	/^	} distance;$/;"	m	struct:_rti_iterator_arg_t	typeref:struct:_rti_iterator_arg_t::__anon13	file:
+drv	rt_warp.c	/^		GDALDriverH drv;$/;"	m	struct:_rti_warp_arg_t::__anon8	file:
+ds	rt_warp.c	/^		GDALDatasetH ds;$/;"	m	struct:_rti_warp_arg_t::__anon8	file:
+dst	librtcore.h	/^	} src, dst;$/;"	m	struct:rt_reclassexpr_t	typeref:struct:rt_reclassexpr_t::rt_reclassrange
+dst	rt_warp.c	/^	} src, dst;$/;"	m	struct:_rti_warp_arg_t	typeref:struct:_rti_warp_arg_t::__anon8	file:
+dst_pixel	librtcore.h	/^	int dst_pixel[2];$/;"	m	struct:rt_iterator_arg_t
+element	librtcore.h	/^	struct quantile_llist_element *element;$/;"	m	struct:quantile_llist_index	typeref:struct:quantile_llist_index::quantile_llist_element
+empty	rt_mapalgebra.c	/^	} empty;$/;"	m	struct:_rti_iterator_arg_t	typeref:struct:_rti_iterator_arg_t::__anon15	file:
+entry	librtcore.h	/^	rt_colormap_entry entry;$/;"	m	struct:rt_colormap_t
+err	rt_context.c	/^    rt_message_handler err;$/;"	m	struct:rt_context_t	file:
+exc_max	librtcore.h	/^		int exc_max; \/* exceed max *\/$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+exc_min	librtcore.h	/^		int exc_min; \/* exceed min *\/$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+expr	rt_mapalgebra.c	/^	rt_reclassexpr *expr;$/;"	m	struct:_rti_colormap_arg_t	file:
+flip_endian_16	rt_serialize.c	/^flip_endian_16(uint8_t *d) {$/;"	f
+flip_endian_32	rt_serialize.c	/^flip_endian_32(uint8_t *d) {$/;"	f
+flip_endian_64	rt_serialize.c	/^flip_endian_64(uint8_t *d) {$/;"	f
+func	rt_warp.c	/^		GDALTransformerFunc func;$/;"	m	struct:_rti_warp_arg_t::__anon9	file:
+geom	librtcore.h	/^	LWGEOM *geom;\/* do not know *\/$/;"	m	struct:rt_pixel_t
+geom	librtcore.h	/^	LWPOLY *geom;$/;"	m	struct:rt_geomval_t
+has_value	librtcore.h	/^	uint32_t has_value;$/;"	m	struct:rt_quantile_t
+hasnodata	librtcore.h	/^    int32_t hasnodata; \/* a flag indicating if this band contains nodata values *\/$/;"	m	struct:rt_band_t
+hasnodata	rt_mapalgebra.c	/^		int *hasnodata;$/;"	m	struct:_rti_iterator_arg_t::__anon12	file:
+hasnodata	rt_mapalgebra.c	/^	int hasnodata;$/;"	m	struct:_rti_colormap_arg_t	file:
+hasnodata	rt_raster.c	/^	uint8_t *hasnodata;$/;"	m	struct:_rti_rasterize_arg_t	file:
+head	librtcore.h	/^	struct quantile_llist_element *head; \/* H index 0 *\/$/;"	m	struct:quantile_llist	typeref:struct:quantile_llist::quantile_llist_element
+height	librtcore.h	/^    uint16_t height; \/* pixel rows - max 65535 *\/$/;"	m	struct:rt_raster_t
+height	librtcore.h	/^    uint16_t height; \/* pixel rows: 2 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+height	librtcore.h	/^    uint16_t height;$/;"	m	struct:rt_band_t
+height	rt_mapalgebra.c	/^	int *height;$/;"	m	struct:_rti_iterator_arg_t	file:
+idx	librtcore.h	/^	int idx;$/;"	m	struct:rt_gdaldriver_t
+imgproj	rt_warp.c	/^			void *imgproj;$/;"	m	struct:_rti_warp_arg_t::__anon9::__anon11	file:
+inc_max	librtcore.h	/^		int inc_max; \/* include max *\/$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+inc_max	librtcore.h	/^	int inc_max;$/;"	m	struct:rt_histogram_t
+inc_min	librtcore.h	/^		int inc_min; \/* include min *\/$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+inc_min	librtcore.h	/^	int inc_min;$/;"	m	struct:rt_histogram_t
+index	librtcore.h	/^	struct quantile_llist_index *index;$/;"	m	struct:quantile_llist	typeref:struct:quantile_llist::quantile_llist_index
+index	librtcore.h	/^	uint32_t index;$/;"	m	struct:quantile_llist_index
+index_max	librtcore.h	/^	uint32_t index_max; \/* max # of elements in index *\/$/;"	m	struct:quantile_llist
+info	rt_context.c	/^    rt_message_handler info;$/;"	m	struct:rt_context_t	file:
+init	rt_raster.c	/^	double *init;$/;"	m	struct:_rti_rasterize_arg_t	file:
+init_rt_allocator	rt_context.c	/^init_rt_allocator(size_t size)$/;"	f
+init_rt_deallocator	rt_context.c	/^init_rt_deallocator(void *mem)$/;"	f
+init_rt_errorreporter	rt_context.c	/^init_rt_errorreporter(const char *fmt, va_list ap)$/;"	f
+init_rt_inforeporter	rt_context.c	/^init_rt_inforeporter(const char *fmt, va_list ap)$/;"	f
+init_rt_reallocator	rt_context.c	/^init_rt_reallocator(void *mem, size_t size)$/;"	f
+init_rt_warnreporter	rt_context.c	/^init_rt_warnreporter(const char *fmt, va_list ap)$/;"	f
+ipX	librtcore.h	/^    double ipX; \/* geo x ordinate of the corner of upper-left pixel *\/$/;"	m	struct:rt_raster_t
+ipX	librtcore.h	/^    double ipX; \/* insertion point X: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+ipY	librtcore.h	/^    double ipY; \/* geo y ordinate of the corner of bottom-right pixel *\/$/;"	m	struct:rt_raster_t
+ipY	librtcore.h	/^    double ipY; \/* insertion point Y: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+isMachineLittleEndian	rt_serialize.c	/^isMachineLittleEndian(void) {$/;"	f
+isempty	rt_mapalgebra.c	/^	int *isempty;$/;"	m	struct:_rti_iterator_arg_t	file:
+isnodata	librtcore.h	/^	int isnodata;$/;"	m	struct:rt_colormap_entry_t
+isnodata	librtcore.h	/^    int32_t isnodata;   \/* a flag indicating if this band is filled only with$/;"	m	struct:rt_band_t
+isnodata	rt_mapalgebra.c	/^		int *isnodata;$/;"	m	struct:_rti_iterator_arg_t::__anon12	file:
+item	rt_warp.c	/^			char **item;$/;"	m	struct:_rti_warp_arg_t::__anon9::__anon10	file:
+len	rt_warp.c	/^			int len;$/;"	m	struct:_rti_warp_arg_t::__anon9::__anon10	file:
+long_name	librtcore.h	/^	char *long_name;$/;"	m	struct:rt_gdaldriver_t
+max	librtcore.h	/^		double max;$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+max	librtcore.h	/^	double max;$/;"	m	struct:rt_bandstats_t
+max	librtcore.h	/^	double max;$/;"	m	struct:rt_histogram_t
+mean	librtcore.h	/^	double mean;$/;"	m	struct:rt_bandstats_t
+mem	librtcore.h	/^		void *mem; \/* loaded external band data, internally owned *\/$/;"	m	struct:rt_extband_t
+mem	librtcore.h	/^        void* mem; \/* actual data, externally owned *\/$/;"	m	union:rt_band_t::__anon6
+method	librtcore.h	/^	} method;$/;"	m	struct:rt_colormap_t	typeref:enum:rt_colormap_t::__anon7
+min	librtcore.h	/^		double min;$/;"	m	struct:rt_reclassexpr_t::rt_reclassrange
+min	librtcore.h	/^	double min;$/;"	m	struct:rt_bandstats_t
+min	librtcore.h	/^	double min;$/;"	m	struct:rt_histogram_t
+minval	rt_mapalgebra.c	/^		double *minval;$/;"	m	struct:_rti_iterator_arg_t::__anon12	file:
+nband	librtcore.h	/^	uint16_t nband; \/* 0-based *\/$/;"	m	struct:rt_iterator_t
+nbnodata	librtcore.h	/^	uint8_t nbnodata; \/* no band = treat as NODATA  *\/$/;"	m	struct:rt_iterator_t
+ncolor	librtcore.h	/^	int ncolor;$/;"	m	struct:rt_colormap_t
+nentry	librtcore.h	/^	uint16_t nentry;$/;"	m	struct:rt_colormap_t
+nexpr	rt_mapalgebra.c	/^	int nexpr;$/;"	m	struct:_rti_colormap_arg_t	file:
+next	librtcore.h	/^	struct quantile_llist_element *next;$/;"	m	struct:quantile_llist_element	typeref:struct:quantile_llist_element::quantile_llist_element
+noband	rt_raster.c	/^	uint8_t noband;$/;"	m	struct:_rti_rasterize_arg_t	file:
+nodata	librtcore.h	/^	int ***nodata;$/;"	m	struct:rt_iterator_arg_t
+nodata	librtcore.h	/^	uint8_t nodata;\/* indecate if this pixel is nodata? *\/$/;"	m	struct:rt_pixel_t
+nodata	rt_mapalgebra.c	/^		int **nodata;$/;"	m	struct:_rti_iterator_arg_t::__anon15	file:
+nodata	rt_raster.c	/^	double *nodata;$/;"	m	struct:_rti_rasterize_arg_t	file:
+nodataentry	rt_mapalgebra.c	/^	rt_colormap_entry nodataentry;$/;"	m	struct:_rti_colormap_arg_t	file:
+nodataval	librtcore.h	/^    double nodataval; \/* int will be converted ... *\/$/;"	m	struct:rt_band_t
+nodataval	rt_mapalgebra.c	/^		double *nodataval;$/;"	m	struct:_rti_iterator_arg_t::__anon12	file:
+nodataval	rt_mapalgebra.c	/^	double nodataval;$/;"	m	struct:_rti_colormap_arg_t	file:
+npos	rt_mapalgebra.c	/^	int npos;$/;"	m	struct:_rti_colormap_arg_t	file:
+numBands	librtcore.h	/^    uint16_t numBands; \/* Number of bands: 2 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+numBands	librtcore.h	/^    uint16_t numBands;$/;"	m	struct:rt_raster_t
+numbands	rt_raster.c	/^	uint32_t numbands; $/;"	m	struct:_rti_rasterize_arg_t	file:
+offline	librtcore.h	/^        struct rt_extband_t offline;$/;"	m	union:rt_band_t::__anon6	typeref:struct:rt_band_t::__anon6::rt_extband_t
+offline	librtcore.h	/^    int32_t offline;$/;"	m	struct:rt_band_t
+offset	rt_mapalgebra.c	/^	double **offset;$/;"	m	struct:_rti_iterator_arg_t	file:
+option	rt_warp.c	/^		} option;$/;"	m	struct:_rti_warp_arg_t::__anon9	typeref:struct:_rti_warp_arg_t::__anon9::__anon10	file:
+ownsdata	librtcore.h	/^    int8_t ownsdata; \/* 0, externally owned. 1, internally owned. only applies to data.mem *\/$/;"	m	struct:rt_band_t
+partition	rt_statistics.c	/^static double *partition(double *left, double *right, double pivot) {$/;"	f	file:
+path	librtcore.h	/^    char* path; \/* internally owned *\/$/;"	m	struct:rt_extband_t
+percent	librtcore.h	/^	double percent;$/;"	m	struct:rt_histogram_t
+percent	librtcore.h	/^	double percent;$/;"	m	struct:rt_valuecount_t
+pivot	rt_statistics.c	/^static double pivot(double *left, double *right) {$/;"	f	file:
+pixtype	librtcore.h	/^    rt_pixtype pixtype;$/;"	m	struct:rt_band_t
+pixtype	rt_raster.c	/^	rt_pixtype *pixtype;$/;"	m	struct:_rti_rasterize_arg_t	file:
+pos	rt_mapalgebra.c	/^	uint16_t *pos;$/;"	m	struct:_rti_colormap_arg_t	file:
+prev	librtcore.h	/^	struct quantile_llist_element *prev;$/;"	m	struct:quantile_llist_element	typeref:struct:quantile_llist_element::quantile_llist_element
+quantile	librtcore.h	/^	double quantile;$/;"	m	struct:quantile_llist
+quantile	librtcore.h	/^	double quantile;$/;"	m	struct:rt_quantile_t
+quantile_llist	librtcore.h	/^struct quantile_llist {$/;"	s
+quantile_llist_delete	rt_statistics.c	/^static int quantile_llist_delete(struct quantile_llist_element *element) {$/;"	f	file:
+quantile_llist_destroy	rt_statistics.c	/^int quantile_llist_destroy(struct quantile_llist **list, uint32_t list_count) {$/;"	f
+quantile_llist_element	librtcore.h	/^struct quantile_llist_element {$/;"	s
+quantile_llist_index	librtcore.h	/^struct quantile_llist_index {$/;"	s
+quantile_llist_index_delete	rt_statistics.c	/^static void quantile_llist_index_delete(struct quantile_llist *qll, struct quantile_llist_element *qle) {$/;"	f	file:
+quantile_llist_index_reset	rt_statistics.c	/^static void quantile_llist_index_reset(struct quantile_llist *qll) {$/;"	f	file:
+quantile_llist_index_search	rt_statistics.c	/^static struct quantile_llist_element *quantile_llist_index_search($/;"	f	file:
+quantile_llist_index_update	rt_statistics.c	/^static void quantile_llist_index_update(struct quantile_llist *qll, struct quantile_llist_element *qle, uint32_t idx) {$/;"	f	file:
+quantile_llist_insert	rt_statistics.c	/^static struct quantile_llist_element *quantile_llist_insert($/;"	f	file:
+quantile_llist_search	rt_statistics.c	/^static struct quantile_llist_element *quantile_llist_search($/;"	f	file:
+quicksort	rt_statistics.c	/^static void quicksort(double *left, double *right) {$/;"	f	file:
+raster	librtcore.h	/^		rt_raster raster; \/* reference to parent raster *\/$/;"	m	struct:rt_band_t
+raster	librtcore.h	/^	rt_raster raster;$/;"	m	struct:rt_iterator_t
+raster	rt_mapalgebra.c	/^	rt_raster *raster;$/;"	m	struct:_rti_iterator_arg_t	file:
+raster	rt_mapalgebra.c	/^	rt_raster raster;$/;"	m	struct:_rti_colormap_arg_t	file:
+rasters	librtcore.h	/^	uint16_t rasters;$/;"	m	struct:rt_iterator_arg_t
+read_float32	rt_serialize.c	/^read_float32(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_float64	rt_serialize.c	/^read_float64(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_int16	rt_serialize.c	/^read_int16(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_int32	rt_serialize.c	/^read_int32(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_int8	rt_serialize.c	/^read_int8(const uint8_t** from) {$/;"	f
+read_uint16	rt_serialize.c	/^read_uint16(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_uint32	rt_serialize.c	/^read_uint32(const uint8_t** from, uint8_t littleEndian) {$/;"	f
+read_uint8	rt_serialize.c	/^read_uint8(const uint8_t** from) {$/;"	f
+realloc	rt_context.c	/^    rt_reallocator realloc;$/;"	m	struct:rt_context_t	file:
+rows	librtcore.h	/^	uint32_t rows;$/;"	m	struct:rt_iterator_arg_t
+rows	rt_mapalgebra.c	/^		uint32_t rows;$/;"	m	struct:_rti_iterator_arg_t::__anon14	file:
+rt_allocator	librtcore.h	/^typedef void* (*rt_allocator)(size_t size);$/;"	t
+rt_band	librtcore.h	/^typedef struct rt_band_t* rt_band;$/;"	t	typeref:struct:rt_band_t
+rt_band_check_is_nodata	rt_band.c	/^rt_band_check_is_nodata(rt_band band) {$/;"	f
+rt_band_clamped_value_is_nodata	rt_band.c	/^rt_band_clamped_value_is_nodata(rt_band band, double val) {$/;"	f
+rt_band_corrected_clamped_value	rt_band.c	/^rt_band_corrected_clamped_value($/;"	f
+rt_band_destroy	rt_band.c	/^rt_band_destroy(rt_band band) { $/;"	f
+rt_band_duplicate	rt_band.c	/^rt_band_duplicate(rt_band band) {$/;"	f
+rt_band_from_wkb	rt_wkb.c	/^rt_band_from_wkb($/;"	f	file:
+rt_band_get_data	rt_band.c	/^rt_band_get_data(rt_band band) {$/;"	f
+rt_band_get_ext_band_num	rt_band.c	/^rt_band_get_ext_band_num(rt_band band, uint8_t *bandnum) {$/;"	f
+rt_band_get_ext_path	rt_band.c	/^rt_band_get_ext_path(rt_band band) {$/;"	f
+rt_band_get_hasnodata_flag	rt_band.c	/^rt_band_get_hasnodata_flag(rt_band band) {$/;"	f
+rt_band_get_height	rt_band.c	/^rt_band_get_height(rt_band band) {$/;"	f
+rt_band_get_histogram	rt_statistics.c	/^rt_band_get_histogram($/;"	f
+rt_band_get_isnodata_flag	rt_band.c	/^rt_band_get_isnodata_flag(rt_band band) {$/;"	f
+rt_band_get_min_value	rt_band.c	/^rt_band_get_min_value(rt_band band) {$/;"	f
+rt_band_get_nearest_pixel	rt_band.c	/^int rt_band_get_nearest_pixel($/;"	f
+rt_band_get_nodata	rt_band.c	/^rt_band_get_nodata(rt_band band, double *nodata) { $/;"	f
+rt_band_get_ownsdata_flag	rt_band.c	/^rt_band_get_ownsdata_flag(rt_band band) {$/;"	f
+rt_band_get_pixel	rt_band.c	/^rt_band_get_pixel($/;"	f
+rt_band_get_pixel_line	rt_band.c	/^rt_errorstate rt_band_get_pixel_line($/;"	f
+rt_band_get_pixel_of_value	rt_band.c	/^rt_band_get_pixel_of_value($/;"	f
+rt_band_get_pixtype	rt_band.c	/^rt_band_get_pixtype(rt_band band) {$/;"	f
+rt_band_get_quantiles	rt_statistics.c	/^rt_band_get_quantiles($/;"	f
+rt_band_get_quantiles_stream	rt_statistics.c	/^rt_band_get_quantiles_stream($/;"	f
+rt_band_get_summary_stats	rt_statistics.c	/^rt_band_get_summary_stats($/;"	f
+rt_band_get_value_count	rt_statistics.c	/^rt_band_get_value_count($/;"	f
+rt_band_get_width	rt_band.c	/^rt_band_get_width(rt_band band) {$/;"	f
+rt_band_is_offline	rt_band.c	/^rt_band_is_offline(rt_band band) {$/;"	f
+rt_band_load_offline_data	rt_band.c	/^rt_band_load_offline_data(rt_band band) {$/;"	f
+rt_band_new_inline	rt_band.c	/^rt_band_new_inline($/;"	f
+rt_band_new_offline	rt_band.c	/^rt_band_new_offline($/;"	f
+rt_band_reclass	rt_mapalgebra.c	/^rt_band_reclass($/;"	f
+rt_band_set_hasnodata_flag	rt_band.c	/^rt_band_set_hasnodata_flag(rt_band band, int flag) {$/;"	f
+rt_band_set_isnodata_flag	rt_band.c	/^rt_band_set_isnodata_flag(rt_band band, int flag) {$/;"	f
+rt_band_set_nodata	rt_band.c	/^rt_band_set_nodata(rt_band band, double val, int *converted) {$/;"	f
+rt_band_set_ownsdata_flag	rt_band.c	/^rt_band_set_ownsdata_flag(rt_band band, int flag) {$/;"	f
+rt_band_set_pixel	rt_band.c	/^rt_band_set_pixel($/;"	f
+rt_band_set_pixel_line	rt_band.c	/^rt_band_set_pixel_line($/;"	f
+rt_band_t	librtcore.h	/^struct rt_band_t {$/;"	s
+rt_bandstats	librtcore.h	/^typedef struct rt_bandstats_t* rt_bandstats;$/;"	t	typeref:struct:rt_bandstats_t
+rt_bandstats_t	librtcore.h	/^struct rt_bandstats_t {$/;"	s
+rt_colormap	librtcore.h	/^typedef struct rt_colormap_t* rt_colormap;$/;"	t	typeref:struct:rt_colormap_t
+rt_colormap_entry	librtcore.h	/^typedef struct rt_colormap_entry_t* rt_colormap_entry;$/;"	t	typeref:struct:rt_colormap_entry_t
+rt_colormap_entry_t	librtcore.h	/^struct rt_colormap_entry_t {$/;"	s
+rt_colormap_t	librtcore.h	/^struct rt_colormap_t {$/;"	s
+rt_context_t	rt_context.c	/^struct rt_context_t {$/;"	s	file:
+rt_deallocator	librtcore.h	/^typedef void  (*rt_deallocator)(void *mem);$/;"	t
+rt_envelope	librtcore.h	/^} rt_envelope;$/;"	t	typeref:struct:__anon1
+rt_errorstate	librtcore.h	/^} rt_errorstate;$/;"	t	typeref:enum:__anon2
+rt_extband_t	librtcore.h	/^struct rt_extband_t {$/;"	s
+rt_extenttype	librtcore.h	/^} rt_extenttype;$/;"	t	typeref:enum:__anon4
+rt_gdaldriver	librtcore.h	/^typedef struct rt_gdaldriver_t* rt_gdaldriver;$/;"	t	typeref:struct:rt_gdaldriver_t
+rt_gdaldriver_t	librtcore.h	/^struct rt_gdaldriver_t {$/;"	s
+rt_geomval	librtcore.h	/^typedef struct rt_geomval_t* rt_geomval;$/;"	t	typeref:struct:rt_geomval_t
+rt_geomval_t	librtcore.h	/^struct rt_geomval_t {$/;"	s
+rt_geos_spatial_test	librtcore.h	/^} rt_geos_spatial_test;$/;"	t	typeref:enum:__anon5
+rt_histogram	librtcore.h	/^typedef struct rt_histogram_t* rt_histogram;$/;"	t	typeref:struct:rt_histogram_t
+rt_histogram_t	librtcore.h	/^struct rt_histogram_t {$/;"	s
+rt_install_default_allocators	rt_context.c	/^rt_install_default_allocators(void)$/;"	f
+rt_iterator	librtcore.h	/^typedef struct rt_iterator_t* rt_iterator;$/;"	t	typeref:struct:rt_iterator_t
+rt_iterator_arg	librtcore.h	/^typedef struct rt_iterator_arg_t* rt_iterator_arg;$/;"	t	typeref:struct:rt_iterator_arg_t
+rt_iterator_arg_t	librtcore.h	/^struct rt_iterator_arg_t {$/;"	s
+rt_iterator_t	librtcore.h	/^struct rt_iterator_t {$/;"	s
+rt_message_handler	librtcore.h	/^typedef void  (*rt_message_handler)(const char* string, va_list ap);$/;"	t
+rt_pixel	librtcore.h	/^typedef struct rt_pixel_t* rt_pixel;$/;"	t	typeref:struct:rt_pixel_t
+rt_pixel_set_to_array	rt_pixel.c	/^rt_errorstate rt_pixel_set_to_array($/;"	f
+rt_pixel_t	librtcore.h	/^struct rt_pixel_t {$/;"	s
+rt_pixtype	librtcore.h	/^} rt_pixtype;$/;"	t	typeref:enum:__anon3
+rt_pixtype_alignment	rt_pixel.c	/^rt_pixtype_alignment(rt_pixtype pixtype) {$/;"	f
+rt_pixtype_compare_clamped_values	rt_pixel.c	/^rt_errorstate rt_pixtype_compare_clamped_values($/;"	f
+rt_pixtype_get_min_value	rt_pixel.c	/^rt_pixtype_get_min_value(rt_pixtype pixtype) {$/;"	f
+rt_pixtype_index_from_name	rt_pixel.c	/^rt_pixtype_index_from_name(const char* pixname) {$/;"	f
+rt_pixtype_name	rt_pixel.c	/^rt_pixtype_name(rt_pixtype pixtype) {$/;"	f
+rt_pixtype_size	rt_pixel.c	/^rt_pixtype_size(rt_pixtype pixtype) {$/;"	f
+rt_quantile	librtcore.h	/^typedef struct rt_quantile_t* rt_quantile;$/;"	t	typeref:struct:rt_quantile_t
+rt_quantile_t	librtcore.h	/^struct rt_quantile_t {$/;"	s
+rt_raster	librtcore.h	/^typedef struct rt_raster_t* rt_raster;$/;"	t	typeref:struct:rt_raster_t
+rt_raster_add_band	rt_raster.c	/^rt_raster_add_band(rt_raster raster, rt_band band, int index) {$/;"	f
+rt_raster_calc_gt_coeff	rt_raster.c	/^rt_raster_calc_gt_coeff(double i_mag, double j_mag, double theta_i, double theta_ij,$/;"	f
+rt_raster_calc_phys_params	rt_raster.c	/^rt_raster_calc_phys_params(double xscale, double xskew, double yskew, double yscale,$/;"	f
+rt_raster_cell_to_geopoint	rt_raster.c	/^rt_raster_cell_to_geopoint($/;"	f
+rt_raster_clone	rt_raster.c	/^rt_raster_clone(rt_raster raster, uint8_t deep) {$/;"	f
+rt_raster_colormap	rt_mapalgebra.c	/^rt_raster rt_raster_colormap($/;"	f
+rt_raster_compute_skewed_raster	rt_raster.c	/^rt_raster_compute_skewed_raster($/;"	f
+rt_raster_contains	rt_spatial_relationship.c	/^rt_errorstate rt_raster_contains($/;"	f
+rt_raster_contains_properly	rt_spatial_relationship.c	/^rt_errorstate rt_raster_contains_properly($/;"	f
+rt_raster_copy_band	rt_raster.c	/^rt_raster_copy_band($/;"	f
+rt_raster_coveredby	rt_spatial_relationship.c	/^rt_errorstate rt_raster_coveredby($/;"	f
+rt_raster_covers	rt_spatial_relationship.c	/^rt_errorstate rt_raster_covers($/;"	f
+rt_raster_deserialize	rt_serialize.c	/^rt_raster_deserialize(void* serialized, int header_only) {$/;"	f
+rt_raster_destroy	rt_raster.c	/^rt_raster_destroy(rt_raster raster) {$/;"	f
+rt_raster_from_band	rt_raster.c	/^rt_raster_from_band(rt_raster raster, uint32_t *bandNums, int count) {$/;"	f
+rt_raster_from_gdal_dataset	rt_raster.c	/^rt_raster_from_gdal_dataset(GDALDatasetH ds) {$/;"	f
+rt_raster_from_hexwkb	rt_wkb.c	/^rt_raster_from_hexwkb(const char* hexwkb, uint32_t hexwkbsize) {$/;"	f
+rt_raster_from_two_rasters	rt_raster.c	/^rt_raster_from_two_rasters($/;"	f
+rt_raster_from_wkb	rt_wkb.c	/^rt_raster_from_wkb(const uint8_t* wkb, uint32_t wkbsize) {$/;"	f
+rt_raster_fully_within_distance	rt_spatial_relationship.c	/^rt_errorstate rt_raster_fully_within_distance($/;"	f
+rt_raster_gdal_drivers	rt_raster.c	/^rt_raster_gdal_drivers(uint32_t *drv_count, uint8_t cancc) {$/;"	f
+rt_raster_gdal_polygonize	rt_geometry.c	/^rt_raster_gdal_polygonize($/;"	f
+rt_raster_gdal_rasterize	rt_raster.c	/^rt_raster_gdal_rasterize($/;"	f
+rt_raster_gdal_warp	rt_warp.c	/^rt_raster rt_raster_gdal_warp($/;"	f
+rt_raster_generate_new_band	rt_raster.c	/^rt_raster_generate_new_band($/;"	f
+rt_raster_geopoint_to_cell	rt_raster.c	/^rt_raster_geopoint_to_cell($/;"	f
+rt_raster_geos_spatial_relationship	rt_spatial_relationship.c	/^rt_errorstate rt_raster_geos_spatial_relationship($/;"	f	file:
+rt_raster_get_band	rt_raster.c	/^rt_raster_get_band(rt_raster raster, int n) {$/;"	f
+rt_raster_get_convex_hull	rt_geometry.c	/^rt_raster_get_convex_hull(rt_raster raster, LWGEOM **hull) {$/;"	f
+rt_raster_get_envelope	rt_raster.c	/^rt_raster_get_envelope($/;"	f
+rt_raster_get_geotransform_matrix	rt_raster.c	/^rt_raster_get_geotransform_matrix(rt_raster raster,$/;"	f
+rt_raster_get_height	rt_raster.c	/^rt_raster_get_height(rt_raster raster) {$/;"	f
+rt_raster_get_inverse_geotransform_matrix	rt_raster.c	/^rt_errorstate rt_raster_get_inverse_geotransform_matrix($/;"	f
+rt_raster_get_num_bands	rt_raster.c	/^rt_raster_get_num_bands(rt_raster raster) {$/;"	f
+rt_raster_get_perimeter	rt_geometry.c	/^rt_errorstate rt_raster_get_perimeter($/;"	f
+rt_raster_get_phys_params	rt_raster.c	/^rt_raster_get_phys_params(rt_raster rast,$/;"	f
+rt_raster_get_srid	rt_raster.c	/^rt_raster_get_srid(rt_raster raster) {$/;"	f
+rt_raster_get_width	rt_raster.c	/^rt_raster_get_width(rt_raster raster) {$/;"	f
+rt_raster_get_x_offset	rt_raster.c	/^rt_raster_get_x_offset(rt_raster raster) {$/;"	f
+rt_raster_get_x_scale	rt_raster.c	/^rt_raster_get_x_scale(rt_raster raster) {$/;"	f
+rt_raster_get_x_skew	rt_raster.c	/^rt_raster_get_x_skew(rt_raster raster) {$/;"	f
+rt_raster_get_y_offset	rt_raster.c	/^rt_raster_get_y_offset(rt_raster raster) {$/;"	f
+rt_raster_get_y_scale	rt_raster.c	/^rt_raster_get_y_scale(rt_raster raster) {$/;"	f
+rt_raster_get_y_skew	rt_raster.c	/^rt_raster_get_y_skew(rt_raster raster) {$/;"	f
+rt_raster_has_band	rt_raster.c	/^rt_raster_has_band(rt_raster raster, int nband) {$/;"	f
+rt_raster_intersects	rt_spatial_relationship.c	/^rt_raster_intersects($/;"	f
+rt_raster_intersects_algorithm	rt_spatial_relationship.c	/^int rt_raster_intersects_algorithm($/;"	f	file:
+rt_raster_is_empty	rt_raster.c	/^rt_raster_is_empty(rt_raster raster) {$/;"	f
+rt_raster_iterator	rt_mapalgebra.c	/^rt_raster_iterator($/;"	f
+rt_raster_new	rt_raster.c	/^rt_raster_new(uint32_t width, uint32_t height) {$/;"	f
+rt_raster_overlaps	rt_spatial_relationship.c	/^rt_errorstate rt_raster_overlaps($/;"	f
+rt_raster_pixel_as_polygon	rt_geometry.c	/^rt_raster_pixel_as_polygon(rt_raster rast, int x, int y)$/;"	f
+rt_raster_replace_band	rt_raster.c	/^rt_raster_replace_band(rt_raster raster, rt_band band, int index) {$/;"	f
+rt_raster_same_alignment	rt_spatial_relationship.c	/^rt_raster_same_alignment($/;"	f
+rt_raster_serialize	rt_serialize.c	/^rt_raster_serialize(rt_raster raster) {$/;"	f
+rt_raster_serialized_size	rt_serialize.c	/^rt_raster_serialized_size(rt_raster raster) {$/;"	f	file:
+rt_raster_serialized_t	librtcore.h	/^struct rt_raster_serialized_t {$/;"	s
+rt_raster_set_geotransform_matrix	rt_raster.c	/^rt_raster_set_geotransform_matrix(rt_raster raster,$/;"	f
+rt_raster_set_offsets	rt_raster.c	/^rt_raster_set_offsets($/;"	f
+rt_raster_set_phys_params	rt_raster.c	/^rt_raster_set_phys_params(rt_raster rast,double i_mag, double j_mag, double theta_i, double theta_ij)$/;"	f
+rt_raster_set_scale	rt_raster.c	/^rt_raster_set_scale($/;"	f
+rt_raster_set_skews	rt_raster.c	/^rt_raster_set_skews($/;"	f
+rt_raster_set_srid	rt_raster.c	/^rt_raster_set_srid(rt_raster raster, int32_t srid) {$/;"	f
+rt_raster_surface	rt_geometry.c	/^rt_errorstate rt_raster_surface(rt_raster raster, int nband, LWMPOLY **surface) {$/;"	f
+rt_raster_t	librtcore.h	/^struct rt_raster_t {$/;"	s
+rt_raster_to_gdal	rt_raster.c	/^rt_raster_to_gdal(rt_raster raster, const char *srs,$/;"	f
+rt_raster_to_gdal_mem	rt_raster.c	/^rt_raster_to_gdal_mem($/;"	f
+rt_raster_to_hexwkb	rt_wkb.c	/^rt_raster_to_hexwkb(rt_raster raster, int outasin, uint32_t *hexwkbsize) {$/;"	f
+rt_raster_to_wkb	rt_wkb.c	/^rt_raster_to_wkb(rt_raster raster, int outasin, uint32_t *wkbsize) {$/;"	f
+rt_raster_touches	rt_spatial_relationship.c	/^rt_errorstate rt_raster_touches($/;"	f
+rt_raster_within_distance	rt_spatial_relationship.c	/^rt_errorstate rt_raster_within_distance($/;"	f
+rt_raster_wkb_size	rt_wkb.c	/^rt_raster_wkb_size(rt_raster raster, int outasin) {$/;"	f	file:
+rt_reallocator	librtcore.h	/^typedef void* (*rt_reallocator)(void *mem, size_t size);$/;"	t
+rt_reclassexpr	librtcore.h	/^typedef struct rt_reclassexpr_t* rt_reclassexpr;$/;"	t	typeref:struct:rt_reclassexpr_t
+rt_reclassexpr_t	librtcore.h	/^struct rt_reclassexpr_t {$/;"	s
+rt_reclassrange	librtcore.h	/^	struct rt_reclassrange {$/;"	s	struct:rt_reclassexpr_t
+rt_set_handlers	rt_context.c	/^rt_set_handlers(rt_allocator allocator, rt_reallocator reallocator,$/;"	f
+rt_util_clamp_to_16BSI	rt_util.c	/^rt_util_clamp_to_16BSI(double value) {$/;"	f
+rt_util_clamp_to_16BUI	rt_util.c	/^rt_util_clamp_to_16BUI(double value) {$/;"	f
+rt_util_clamp_to_1BB	rt_util.c	/^rt_util_clamp_to_1BB(double value) {$/;"	f
+rt_util_clamp_to_2BUI	rt_util.c	/^rt_util_clamp_to_2BUI(double value) {$/;"	f
+rt_util_clamp_to_32BSI	rt_util.c	/^rt_util_clamp_to_32BSI(double value) {$/;"	f
+rt_util_clamp_to_32BUI	rt_util.c	/^rt_util_clamp_to_32BUI(double value) {$/;"	f
+rt_util_clamp_to_32F	rt_util.c	/^rt_util_clamp_to_32F(double value) {$/;"	f
+rt_util_clamp_to_4BUI	rt_util.c	/^rt_util_clamp_to_4BUI(double value) {$/;"	f
+rt_util_clamp_to_8BSI	rt_util.c	/^rt_util_clamp_to_8BSI(double value) {$/;"	f
+rt_util_clamp_to_8BUI	rt_util.c	/^rt_util_clamp_to_8BUI(double value) {$/;"	f
+rt_util_dbl_trunc_warning	rt_util.c	/^rt_util_dbl_trunc_warning($/;"	f
+rt_util_envelope_to_lwpoly	rt_util.c	/^rt_util_envelope_to_lwpoly($/;"	f
+rt_util_extent_type	rt_util.c	/^rt_util_extent_type(const char *name) {$/;"	f
+rt_util_from_ogr_envelope	rt_util.c	/^rt_util_from_ogr_envelope($/;"	f
+rt_util_gdal_configured	rt_util.c	/^int rt_util_gdal_configured(void) {$/;"	f
+rt_util_gdal_convert_sr	rt_util.c	/^rt_util_gdal_convert_sr(const char *srs, int proj4) {$/;"	f
+rt_util_gdal_datatype_to_pixtype	rt_util.c	/^rt_util_gdal_datatype_to_pixtype(GDALDataType gdt) {$/;"	f
+rt_util_gdal_driver_registered	rt_util.c	/^rt_util_gdal_driver_registered(const char *drv) {$/;"	f
+rt_util_gdal_register_all	rt_util.c	/^rt_util_gdal_register_all(void) {$/;"	f
+rt_util_gdal_resample_alg	rt_util.c	/^rt_util_gdal_resample_alg(const char *algname) {$/;"	f
+rt_util_gdal_sr_auth_info	rt_util.c	/^rt_util_gdal_sr_auth_info(GDALDatasetH hds, char **authname, char **authcode) {$/;"	f
+rt_util_gdal_supported_sr	rt_util.c	/^rt_util_gdal_supported_sr(const char *srs) {$/;"	f
+rt_util_gdal_version	rt_util.c	/^rt_util_gdal_version(const char *request) {$/;"	f
+rt_util_hsv_to_rgb	rt_util.c	/^rt_util_hsv_to_rgb(double hsv[3], double rgb[3]) {$/;"	f
+rt_util_pixtype_to_gdal_datatype	rt_util.c	/^rt_util_pixtype_to_gdal_datatype(rt_pixtype pt) {$/;"	f
+rt_util_rgb_to_hsv	rt_util.c	/^rt_util_rgb_to_hsv(double rgb[3], double hsv[3]) {$/;"	f
+rt_util_same_geotransform_matrix	rt_util.c	/^rt_util_same_geotransform_matrix(double *gt1, double *gt2) {$/;"	f
+rt_util_to_ogr_envelope	rt_util.c	/^rt_util_to_ogr_envelope($/;"	f
+rt_valuecount	librtcore.h	/^typedef struct rt_valuecount_t* rt_valuecount;$/;"	t	typeref:struct:rt_valuecount_t
+rt_valuecount_t	librtcore.h	/^struct rt_valuecount_t {$/;"	s
+rtalloc	rt_context.c	/^rtalloc(size_t size) {$/;"	f
+rtband	rt_mapalgebra.c	/^		rt_band *rtband;$/;"	m	struct:_rti_iterator_arg_t::__anon12	file:
+rtdealloc	rt_context.c	/^rtdealloc(void * mem) {$/;"	f
+rterror	rt_context.c	/^rterror(const char *fmt, ...) {$/;"	f
+rtinfo	rt_context.c	/^rtinfo(const char *fmt, ...) {$/;"	f
+rtrealloc	rt_context.c	/^rtrealloc(void * mem, size_t size) {$/;"	f
+rtwarn	rt_context.c	/^rtwarn(const char *fmt, ...) {$/;"	f
+sample	librtcore.h	/^	double sample;$/;"	m	struct:rt_bandstats_t
+scaleX	librtcore.h	/^    double scaleX; \/* pixel width *\/$/;"	m	struct:rt_raster_t
+scaleX	librtcore.h	/^    double scaleX; \/* pixel width: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+scaleY	librtcore.h	/^    double scaleY; \/* pixel height *\/$/;"	m	struct:rt_raster_t
+scaleY	librtcore.h	/^    double scaleY; \/* pixel height: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+setBits	rt_serialize.c	/^setBits(char* ch, double val, int bits, int bitOffset) {$/;"	f
+short_name	librtcore.h	/^	char *short_name;$/;"	m	struct:rt_gdaldriver_t
+size	librtcore.h	/^    uint32_t size; \/* required by postgresql: 4 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+size	librtcore.h	/^    uint32_t size; \/* what does this mean? *\/$/;"	m	struct:rt_raster_t
+skewX	librtcore.h	/^    double skewX; \/* skew about the X axis*\/$/;"	m	struct:rt_raster_t
+skewX	librtcore.h	/^    double skewX; \/* skew about the X axis: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+skewY	librtcore.h	/^    double skewY; \/* skew about the Y axis *\/$/;"	m	struct:rt_raster_t
+skewY	librtcore.h	/^    double skewY; \/* skew about the Y axis: 8 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+sorted	librtcore.h	/^	int sorted; \/* flag indicating that values is sorted ascending by value *\/$/;"	m	struct:rt_bandstats_t
+src	librtcore.h	/^	} src, dst;$/;"	m	struct:rt_reclassexpr_t	typeref:struct:rt_reclassexpr_t::rt_reclassrange
+src	rt_warp.c	/^	} src, dst;$/;"	m	struct:_rti_warp_arg_t	typeref:struct:_rti_warp_arg_t::__anon8	file:
+src_pixel	librtcore.h	/^	int **src_pixel;$/;"	m	struct:rt_iterator_arg_t
+srid	librtcore.h	/^    int32_t srid; \/* Spatial reference id: 4 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+srid	librtcore.h	/^    int32_t srid; \/* spatial reference id *\/$/;"	m	struct:rt_raster_t
+srs	rt_warp.c	/^		char *srs;$/;"	m	struct:_rti_warp_arg_t::__anon8	file:
+stddev	librtcore.h	/^	double stddev;$/;"	m	struct:rt_bandstats_t
+stricmp	librtcore.h	114;"	d
+strnicmp	librtcore.h	117;"	d
+sum	librtcore.h	/^	double sum;$/;"	m	struct:rt_bandstats_t
+sum1	librtcore.h	/^	uint64_t sum1; \/* N1H *\/$/;"	m	struct:quantile_llist
+sum2	librtcore.h	/^	uint64_t sum2; \/* N2H *\/$/;"	m	struct:quantile_llist
+swap_char	rt_serialize.c	/^swap_char(uint8_t *a, uint8_t *b) {$/;"	f
+tail	librtcore.h	/^	struct quantile_llist_element *tail; \/* H index last *\/$/;"	m	struct:quantile_llist	typeref:struct:quantile_llist::quantile_llist_element
+tau	librtcore.h	/^	uint64_t tau; \/* position in sequence *\/$/;"	m	struct:quantile_llist
+transform	rt_warp.c	/^			void *transform;$/;"	m	struct:_rti_warp_arg_t::__anon9::__anon11	file:
+transform	rt_warp.c	/^	} transform;$/;"	m	struct:_rti_warp_arg_t	typeref:struct:_rti_warp_arg_t::__anon9	file:
+val	librtcore.h	/^	double val;$/;"	m	struct:rt_geomval_t
+value	librtcore.h	/^	double value;$/;"	m	struct:quantile_llist_element
+value	librtcore.h	/^	double value;$/;"	m	struct:rt_colormap_entry_t
+value	librtcore.h	/^	double value;$/;"	m	struct:rt_pixel_t
+value	librtcore.h	/^	double value;$/;"	m	struct:rt_quantile_t
+value	librtcore.h	/^	double value;$/;"	m	struct:rt_valuecount_t
+value	rt_raster.c	/^	double *value;$/;"	m	struct:_rti_rasterize_arg_t	file:
+values	librtcore.h	/^	double ***values;$/;"	m	struct:rt_iterator_arg_t
+values	librtcore.h	/^	double *values;$/;"	m	struct:rt_bandstats_t
+values	rt_mapalgebra.c	/^		double **values;$/;"	m	struct:_rti_iterator_arg_t::__anon15	file:
+version	librtcore.h	/^    uint16_t version; \/* format version (this is version 0): 2 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+version	librtcore.h	/^    uint16_t version;$/;"	m	struct:rt_raster_t
+warn	rt_context.c	/^    rt_message_handler warn;$/;"	m	struct:rt_context_t	file:
+width	librtcore.h	/^    uint16_t width; \/* pixel columns - max 65535 *\/$/;"	m	struct:rt_raster_t
+width	librtcore.h	/^    uint16_t width; \/* pixel columns: 2 bytes *\/$/;"	m	struct:rt_raster_serialized_t
+width	librtcore.h	/^    uint16_t width;$/;"	m	struct:rt_band_t
+width	rt_mapalgebra.c	/^	int *width;$/;"	m	struct:_rti_iterator_arg_t	file:
+wopts	rt_warp.c	/^	GDALWarpOptions *wopts;$/;"	m	struct:_rti_warp_arg_t	file:
+write_uint16	rt_serialize.c	/^write_uint16(uint8_t** to, uint8_t littleEndian, uint16_t v) {$/;"	f
+x	librtcore.h	/^	int x; \/* column *\/$/;"	m	struct:rt_pixel_t
+x	rt_mapalgebra.c	/^		uint16_t x;$/;"	m	struct:_rti_iterator_arg_t::__anon13	file:
+y	librtcore.h	/^	int y; \/* line *\/$/;"	m	struct:rt_pixel_t
+y	rt_mapalgebra.c	/^		uint16_t y;$/;"	m	struct:_rti_iterator_arg_t::__anon13	file:

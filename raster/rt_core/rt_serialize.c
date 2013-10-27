@@ -155,6 +155,7 @@ void
 swap_char(uint8_t *a, uint8_t *b) {
     uint8_t c = 0;
 
+		/* the expression in assert must be true, or the process abort! */
     assert(NULL != a && NULL != b);
 
     c = *a;

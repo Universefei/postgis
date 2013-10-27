@@ -577,7 +577,7 @@ void printPA(POINTARRAY *pa)
 
 /**
  * Given a string with at least 2 chars in it, convert them to
- * a byte value.  No error checking done!
+ * a byte value(decimalism).  No error checking done!
  */
 uint8_t
 parse_hex(char *str)
@@ -587,6 +587,8 @@ parse_hex(char *str)
 	uint8_t		result_high = 0;
 	uint8_t		result_low = 0;
 
+	/* switch can be faster than if/else statements */
+	/* directly addressing */
 	switch (str[0])
 	{
 	case '0' :

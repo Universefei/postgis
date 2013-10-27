@@ -286,6 +286,7 @@ struct rt_raster_serialized_t {
 /* NOTE: the initial part of this structure matches the layout
  *       of data in the serialized form version 0, starting
  *       from the numBands element
+ * NOTE: be coordinate to WKB layout
  */
 
 /****[ other info ]*************************************************************
@@ -314,7 +315,7 @@ struct rt_raster_serialized_t {
  *  rt_band *bands;
  *****************************************************************************/
 struct rt_raster_t {
-    uint32_t size;
+    uint32_t size; /* LittleEndian, means bool semantically */
     uint16_t version;
 
     /* Number of bands, all share the same dimension
@@ -341,6 +342,8 @@ struct rt_raster_t {
 		 * where rt_band_t stored seperatly!
 		 * 1] if use rt_band_t ,it need to store a array of rt_band_t struture
 		 *    in a linear memory,maybe system do not have that much linear memory!
+		 * 2] the deeper layer pointer means the less constraint memory required
+		 *    (memory can be distrubuted small pieces,not must long continuous mem)
 		 */
     rt_band *bands; /* actual bands */
 	
@@ -392,6 +395,10 @@ struct rt_band_t {
         void* mem; /* actual data, externally owned */
         struct rt_extband_t offline;
     } data;
+/*---------------------------------------------------------------------------*/
+/*                  How to call union in a structure?                        */
+/*                                                                           */
+/*---------------------------------------------------------------------------*/
 
 };
 
